@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get in Touch — RetroBooks</title>
+  <meta name="description" content="Contact RetroBooks to discuss a catch-up bookkeeping partnership for your tax resolution firm.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#0f1b2d',
+            slate: { 750: '#293548' },
+            accent: '#2563eb',
+            'accent-dark': '#1d4ed8',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-xl font-bold text-navy tracking-tight">
+        Retro<span class="text-accent">Books</span>
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-navy" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+        <a href="index.html" class="hover:text-navy transition-colors">Home</a>
+        <a href="how-it-works.html" class="hover:text-navy transition-colors">How It Works</a>
+        <a href="pricing.html" class="hover:text-navy transition-colors">Pricing</a>
+        <a href="tax-resolution-firms.html" class="hover:text-navy transition-colors">For Tax Resolution Firms</a>
+        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors">Get in Touch</a>
+      </nav>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+      <nav class="max-w-6xl mx-auto px-6 py-4 flex flex-col space-y-3 text-sm font-medium text-gray-600">
+        <a href="index.html" class="hover:text-navy py-2 transition-colors">Home</a>
+        <a href="how-it-works.html" class="hover:text-navy py-2 transition-colors">How It Works</a>
+        <a href="pricing.html" class="hover:text-navy py-2 transition-colors">Pricing</a>
+        <a href="tax-resolution-firms.html" class="hover:text-navy py-2 transition-colors">For Tax Resolution Firms</a>
+        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors text-center">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="bg-navy text-white py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Get in Touch</h1>
+        <p class="mt-4 text-lg text-gray-300 leading-relaxed">
+          Tell us about your firm and we'll set up a time to discuss how RetroBooks can support your workflow. No commitment required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid lg:grid-cols-5 gap-12 lg:gap-16">
+
+        <!-- Form -->
+        <div class="lg:col-span-3">
+          <form action="#" method="POST" class="space-y-6">
+            <div>
+              <label for="company-name" class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+              <input type="text" id="company-name" name="company_name" required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                placeholder="Your firm name">
+            </div>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <input type="text" id="first-name" name="first_name" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                  placeholder="First name">
+              </div>
+              <div>
+                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <input type="text" id="last-name" name="last_name" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                  placeholder="Last name">
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" name="email" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                  placeholder="you@yourfirm.com">
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                <input type="tel" id="phone" name="phone"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                  placeholder="(555) 000-0000">
+              </div>
+            </div>
+            <div>
+              <label for="volume" class="block text-sm font-medium text-gray-700 mb-2">Estimated Monthly Client Volume</label>
+              <select id="volume" name="monthly_client_volume"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-accent focus:border-accent transition-colors bg-white">
+                <option value="" disabled selected>Select range</option>
+                <option value="1-5">1 – 5 clients</option>
+                <option value="6-15">6 – 15 clients</option>
+                <option value="16-30">16 – 30 clients</option>
+                <option value="31+">31+ clients</option>
+                <option value="not-sure">Not sure</option>
+              </select>
+            </div>
+            <div>
+              <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Anything else you want to share?</label>
+              <textarea id="notes" name="notes" rows="4"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors resize-vertical"
+                placeholder="Tell us about your firm, your workflow, or any questions you have..."></textarea>
+            </div>
+            <div>
+              <button type="submit"
+                class="w-full sm:w-auto bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
+                Submit Inquiry
+              </button>
+              <p class="mt-3 text-sm text-gray-500">
+                We'll review your inquiry and respond within one business day.
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-2">
+          <div class="bg-gray-50 rounded-xl p-8 border border-gray-200">
+            <h3 class="text-lg font-semibold text-navy">What to expect</h3>
+            <div class="mt-6 space-y-5">
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span class="text-accent font-semibold text-sm">1</span>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-navy">We review your inquiry</p>
+                  <p class="mt-1 text-sm text-gray-500">Our team reviews your firm's profile and needs.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span class="text-accent font-semibold text-sm">2</span>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-navy">Brief intro conversation</p>
+                  <p class="mt-1 text-sm text-gray-500">A short call to understand your workflow and discuss how we can help.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span class="text-accent font-semibold text-sm">3</span>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-navy">Determine next steps</p>
+                  <p class="mt-1 text-sm text-gray-500">We'll outline how the partnership works and be ready when your first case arrives.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 bg-navy rounded-xl p-8 text-white">
+            <h3 class="text-lg font-semibold">Quick reference</h3>
+            <div class="mt-4 space-y-3 text-sm text-gray-400">
+              <div class="flex justify-between">
+                <span>Starting price</span>
+                <span class="text-white font-medium">$299/month</span>
+              </div>
+              <div class="border-t border-gray-700"></div>
+              <div class="flex justify-between">
+                <span>Standard engagements</span>
+                <span class="text-white font-medium">Up to 24 months</span>
+              </div>
+              <div class="border-t border-gray-700"></div>
+              <div class="flex justify-between">
+                <span>Commitments</span>
+                <span class="text-white font-medium">Per-case basis</span>
+              </div>
+              <div class="border-t border-gray-700"></div>
+              <div class="flex justify-between">
+                <span>White-label</span>
+                <span class="text-white font-medium">Available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-navy text-gray-400 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <a href="index.html" class="text-xl font-bold text-white tracking-tight">Retro<span class="text-blue-400">Books</span></a>
+          <p class="mt-4 text-sm leading-relaxed max-w-md">
+            Specialized catch-up bookkeeping and historical book reconstruction for tax resolution firms and accounting firms handling IRS disputes.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Pages</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">How It Works</a></li>
+            <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+            <li><a href="tax-resolution-firms.html" class="hover:text-white transition-colors">For Tax Resolution Firms</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="contact.html" class="hover:text-white transition-colors">Get in Touch</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-gray-500">
+        &copy; 2026 RetroBooks. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>

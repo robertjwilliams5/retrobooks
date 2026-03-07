@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — RetroBooks</title>
+  <meta name="description" content="Learn how RetroBooks reconstructs historical books for tax resolution firms. A clear, scoped process from case intake to clean financials delivered.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#0f1b2d',
+            slate: { 750: '#293548' },
+            accent: '#2563eb',
+            'accent-dark': '#1d4ed8',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-xl font-bold text-navy tracking-tight">
+        Retro<span class="text-accent">Books</span>
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-navy" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+        <a href="index.html" class="hover:text-navy transition-colors">Home</a>
+        <a href="how-it-works.html" class="text-navy">How It Works</a>
+        <a href="pricing.html" class="hover:text-navy transition-colors">Pricing</a>
+        <a href="tax-resolution-firms.html" class="hover:text-navy transition-colors">For Tax Resolution Firms</a>
+        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors">Get in Touch</a>
+      </nav>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+      <nav class="max-w-6xl mx-auto px-6 py-4 flex flex-col space-y-3 text-sm font-medium text-gray-600">
+        <a href="index.html" class="hover:text-navy py-2 transition-colors">Home</a>
+        <a href="how-it-works.html" class="text-navy py-2">How It Works</a>
+        <a href="pricing.html" class="hover:text-navy py-2 transition-colors">Pricing</a>
+        <a href="tax-resolution-firms.html" class="hover:text-navy py-2 transition-colors">For Tax Resolution Firms</a>
+        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors text-center">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="bg-navy text-white py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">How It Works</h1>
+        <p class="mt-4 text-lg text-gray-300 leading-relaxed">
+          We reconstruct the books so you can resolve the case. Here's how the engagement works from start to finish.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Steps -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl space-y-16">
+
+        <!-- Step 1 -->
+        <div class="flex gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+              <span class="text-accent font-bold text-lg">1</span>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-navy">Share case details and bookkeeping backlog</h2>
+            <div class="mt-4 space-y-3 text-gray-600 leading-relaxed">
+              <p>
+                When you have a case that requires historical book reconstruction, reach out to RetroBooks with the relevant details. We'll need to understand:
+              </p>
+              <ul class="space-y-2 ml-1">
+                <li class="flex items-start gap-2">
+                  <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Number of months of bookkeeping backlog</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Current state of available records (bank statements, receipts, prior filings)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Accounting platform currently in use (if any)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Any specific requirements related to the IRS case</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+              <span class="text-accent font-bold text-lg">2</span>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-navy">RetroBooks assesses scope and provides a quote</h2>
+            <div class="mt-4 space-y-3 text-gray-600 leading-relaxed">
+              <p>
+                We review the case details and assess the scope of the reconstruction work. Based on the number of months, complexity, available records, and number of accounts, we provide a clear, upfront quote.
+              </p>
+              <p>
+                Our standard pricing starts at $299 per month of books reconstructed and applies for engagements up to 24 months of backlog. For cases exceeding 24 months, we provide a custom quote.
+              </p>
+              <p>
+                There are no hidden fees. If the scope changes during the engagement, we communicate that clearly before proceeding.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+              <span class="text-accent font-bold text-lg">3</span>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-navy">Reconstructed financial statements delivered to your firm</h2>
+            <div class="mt-4 space-y-3 text-gray-600 leading-relaxed">
+              <p>
+                Our team reconstructs the historical financials using the records provided and delivers a comprehensive Excel workbook containing the reconstructed financial statements, general ledger, and supporting schedules your firm needs.
+              </p>
+              <p>
+                The delivered workbook is ready for your team to use in preparing tax filings, supporting IRS negotiations, or building a resolution strategy. If you're using our white-label partner capability, the deliverables are presented under your firm's brand.
+              </p>
+              <p>
+                Throughout the engagement, we maintain clear communication about progress and flag any issues with missing records or unexpected complexity.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Deliver -->
+  <section class="py-20 md:py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-navy tracking-tight">What you receive</h2>
+      <div class="mt-10 grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-xl p-8 border border-gray-200">
+          <h3 class="text-lg font-semibold text-navy">Comprehensive Excel workbook</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            A complete workbook containing reconstructed financial statements, general ledger, account reconciliations, and supporting schedules covering the full backlog period.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-8 border border-gray-200">
+          <h3 class="text-lg font-semibold text-navy">Ready for your team to use</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            The delivered workbook is organized and structured so your team can immediately use the reconstructed records for filings, negotiations, or import into your preferred accounting platform.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-8 border border-gray-200">
+          <h3 class="text-lg font-semibold text-navy">Documentation for IRS purposes</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Books reconstructed with the understanding that they may be used in IRS filings or negotiations. Clean records that support your firm's resolution strategy.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-8 border border-gray-200">
+          <h3 class="text-lg font-semibold text-navy">Clear progress communication</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Regular updates on reconstruction progress, including any flagged issues with missing records or scope adjustments needed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-navy tracking-tight">
+        Have a case that needs catch-up bookkeeping?
+      </h2>
+      <p class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
+        Get in touch with the case details and we'll scope the engagement for you.
+      </p>
+      <div class="mt-8">
+        <a href="contact.html" class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-navy text-gray-400 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <a href="index.html" class="text-xl font-bold text-white tracking-tight">Retro<span class="text-blue-400">Books</span></a>
+          <p class="mt-4 text-sm leading-relaxed max-w-md">
+            Specialized catch-up bookkeeping and historical book reconstruction for tax resolution firms and accounting firms handling IRS disputes.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Pages</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">How It Works</a></li>
+            <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+            <li><a href="tax-resolution-firms.html" class="hover:text-white transition-colors">For Tax Resolution Firms</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="contact.html" class="hover:text-white transition-colors">Get in Touch</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-gray-500">
+        &copy; 2026 RetroBooks. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>

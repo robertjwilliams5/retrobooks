@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetroBooks — Catch-Up Bookkeeping for Tax Resolution Firms</title>
+  <meta name="description" content="RetroBooks provides catch-up bookkeeping and historical book reconstruction for tax resolution firms and accounting firms handling IRS disputes.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#0f1b2d',
+            slate: {
+              750: '#293548',
+            },
+            accent: '#2563eb',
+            'accent-dark': '#1d4ed8',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-xl font-bold text-navy tracking-tight">
+        Retro<span class="text-accent">Books</span>
+      </a>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-navy" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <nav id="desktop-nav" class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+        <a href="index.html" class="text-navy">Home</a>
+        <a href="how-it-works.html" class="hover:text-navy transition-colors">How It Works</a>
+        <a href="pricing.html" class="hover:text-navy transition-colors">Pricing</a>
+        <a href="tax-resolution-firms.html" class="hover:text-navy transition-colors">For Tax Resolution Firms</a>
+        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors">Get in Touch</a>
+      </nav>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+      <nav class="max-w-6xl mx-auto px-6 py-4 flex flex-col space-y-3 text-sm font-medium text-gray-600">
+        <a href="index.html" class="text-navy py-2">Home</a>
+        <a href="how-it-works.html" class="hover:text-navy py-2 transition-colors">How It Works</a>
+        <a href="pricing.html" class="hover:text-navy py-2 transition-colors">Pricing</a>
+        <a href="tax-resolution-firms.html" class="hover:text-navy py-2 transition-colors">For Tax Resolution Firms</a>
+        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors text-center">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-navy text-white">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight">
+          Catch-Up Bookkeeping Built for Tax Resolution Firms
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
+          When clients arrive with months or years of incomplete books, RetroBooks reconstructs the financials so your team can focus on resolving the case.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 text-sm">
+          <div class="flex items-center gap-2 text-gray-300">
+            <svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            Starting at $299/month of books reconstructed
+          </div>
+          <div class="flex items-center gap-2 text-gray-300">
+            <svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            Built for IRS resolution cases
+          </div>
+          <div class="flex items-center gap-2 text-gray-300">
+            <svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            White-label partner support
+          </div>
+        </div>
+        <div class="mt-10">
+          <a href="contact.html" class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="py-20 md:py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl md:text-3xl font-bold text-navy tracking-tight">
+          When messy books stall a case
+        </h2>
+        <div class="mt-6 space-y-4 text-gray-600 leading-relaxed text-lg">
+          <p>
+            Tax resolution cases rarely arrive with clean financials. Clients come to your firm because they're already behind&mdash;and their books reflect it. Months or years of incomplete records, missing documentation, and unreliable data.
+          </p>
+          <p>
+            Before your team can negotiate with the IRS, prepare filings, or build a resolution strategy, someone has to reconstruct those books. That work often falls to internal staff who should be focused on higher-value case work.
+          </p>
+          <p>
+            RetroBooks exists to solve that bottleneck. We handle the historical bookkeeping reconstruction so your team can stay focused on what they do best&mdash;resolving cases and serving clients.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Firms Partner -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-navy tracking-tight">
+        Why firms partner with RetroBooks
+      </h2>
+      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy">Purpose-built for IRS resolution cases</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Our team understands the specific requirements of historical book reconstruction for tax resolution workflows. We know what your firm needs to move a case forward.
+          </p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy">White-label partner capability</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Present the bookkeeping work under your own brand. Your clients see a seamless experience while RetroBooks handles the reconstruction behind the scenes.
+          </p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy">Faster turnaround on historical books</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Dedicated resources focused entirely on catch-up bookkeeping means your cases aren't waiting on overloaded internal staff to find time for reconstruction work.
+          </p>
+        </div>
+        <!-- Card 4 -->
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy">Complex multi-year reconstruction</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Our team includes Big-4 trained accountants with deep experience handling complex, multi-year historical bookkeeping engagements.
+          </p>
+        </div>
+        <!-- Card 5 -->
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy">Flexible engagements</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            No long-term contracts required. Engage RetroBooks on a per-case basis as your firm's caseload demands. Scale up or down as needed.
+          </p>
+        </div>
+        <!-- Card 6 -->
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy">Free your internal team</h3>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Stop pulling your tax professionals and case managers into bookkeeping work. Let your team focus on negotiation, tax strategy, and case resolution.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works (Brief) -->
+  <section class="py-20 md:py-24 bg-navy text-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-bold tracking-tight">
+        How it works
+      </h2>
+      <p class="mt-4 text-gray-400 text-lg max-w-2xl">
+        A straightforward process designed to fit into your existing case workflow.
+      </p>
+      <div class="mt-12 grid md:grid-cols-3 gap-8">
+        <div>
+          <div class="text-3xl font-bold text-blue-400 mb-4">01</div>
+          <h3 class="text-lg font-semibold">Share case details</h3>
+          <p class="mt-3 text-gray-400 leading-relaxed">
+            Provide the bookkeeping backlog, available records, and any relevant case context. We'll review the scope and assess complexity.
+          </p>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-blue-400 mb-4">02</div>
+          <h3 class="text-lg font-semibold">Receive a scoped quote</h3>
+          <p class="mt-3 text-gray-400 leading-relaxed">
+            RetroBooks provides a clear quote based on the number of months, complexity, and records available. No surprises.
+          </p>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-blue-400 mb-4">03</div>
+          <h3 class="text-lg font-semibold">Reconstructed financials delivered</h3>
+          <p class="mt-3 text-gray-400 leading-relaxed">
+            Receive a comprehensive Excel workbook with reconstructed financial statements, ledgers, and supporting schedules ready for your team.
+          </p>
+        </div>
+      </div>
+      <div class="mt-12">
+        <a href="how-it-works.html" class="text-blue-400 hover:text-blue-300 font-medium text-sm transition-colors">
+          Learn more about our process &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-navy tracking-tight">
+        Ready to clear the bookkeeping backlog?
+      </h2>
+      <p class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
+        Get in touch to discuss your firm's needs. We'll scope the engagement and provide a clear quote.
+      </p>
+      <div class="mt-8">
+        <a href="contact.html" class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-navy text-gray-400 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <a href="index.html" class="text-xl font-bold text-white tracking-tight">
+            Retro<span class="text-blue-400">Books</span>
+          </a>
+          <p class="mt-4 text-sm leading-relaxed max-w-md">
+            Specialized catch-up bookkeeping and historical book reconstruction for tax resolution firms and accounting firms handling IRS disputes.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Pages</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">How It Works</a></li>
+            <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+            <li><a href="tax-resolution-firms.html" class="hover:text-white transition-colors">For Tax Resolution Firms</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="contact.html" class="hover:text-white transition-colors">Get in Touch</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-gray-500">
+        &copy; 2026 RetroBooks. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>
