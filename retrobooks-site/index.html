@@ -1,392 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RetroBooks — Historical Bookkeeping Cleanup</title>
-  <meta name="description" content="RetroBooks reconstructs messy, incomplete, or outdated financial records so businesses and firms can move forward with clean, accurate books.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#111827',
-            muted: '#6b7280',
-            accent: '#2563eb',
-            'accent-dark': '#1d4ed8',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-          },
-        }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-    html { scroll-behavior: smooth; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RetroBooks — Catch-up bookkeeping for businesses</title>
+<meta name="description" content="Messy records, missing months, mixed accounts — we reconstruct your books so you can close the gap and move forward clean.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf8f3;
+    --panel: #ffffff;
+    --panel-2: #f5efe4;
+    --rule: #e8e0d4;
+    --rule-strong: #d6cdbd;
+    --ink: #1e1a16;
+    --ink-2: #3b342d;
+    --muted: #7c7168;
+    --muted-2: #9b9185;
+    --accent: #8a4a32;
+    --accent-soft: #f1e5dc;
+    --green: #4a8f5e;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .serif { font-family: 'Instrument Serif', Georgia, serif; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(251,248,243,0.92);
+    backdrop-filter: saturate(1.2) blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .header-inner {
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-size: 17px; font-weight: 600; letter-spacing: -0.01em;
+    display: inline-flex; align-items: baseline;
+  }
+  .logo .dot { color: var(--accent); }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--muted);
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 5px 11px; border-radius: 999px; margin-left: 16px;
+  }
+  .status-pill .d {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 0 3px rgba(74,143,94,0.14);
+  }
+  nav { display: flex; align-items: center; gap: 28px; }
+  nav a { font-size: 13px; color: var(--ink-2); }
+  nav a:hover { color: var(--accent); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500;
+    padding: 9px 18px; border-radius: 999px;
+    border: 1px solid transparent; cursor: pointer;
+    font-family: inherit;
+    transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-accent {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+    padding: 12px 22px; font-size: 14px;
+  }
+  .btn-accent:hover { background: #6f3a26; border-color: #6f3a26; }
+  .btn-ghost {
+    background: transparent; color: var(--ink-2);
+    padding: 12px 4px; font-weight: 500;
+  }
+  .btn-ghost:hover { color: var(--accent); }
+
+  /* mobile nav toggle */
+  .nav-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 8px; color: var(--ink-2);
+  }
+  .mobile-nav {
+    display: none; border-top: 1px solid var(--rule);
+    background: rgba(251,248,243,0.98);
+    padding: 16px 40px 20px;
+    flex-direction: column; gap: 4px;
+  }
+  .mobile-nav a {
+    font-size: 14px; color: var(--ink-2); padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav.open { display: flex; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 96px 0 0; text-align: center; }
+  .hero .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; color: var(--accent);
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 5px 14px; border-radius: 999px; margin-bottom: 32px;
+  }
+  .hero .tag .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted-2);
+  }
+  h1.hero-title {
+    font-size: clamp(52px, 9vw, 104px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    margin: 0 0 28px;
+    font-weight: 500;
+    max-width: 18ch; margin-left: auto; margin-right: auto;
+    text-wrap: balance;
+  }
+  h1.hero-title .italic {
+    color: var(--accent);
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic; font-weight: 400; letter-spacing: -0.02em;
+  }
+  .hero p.sub {
+    font-size: 18px; line-height: 1.55; color: var(--muted);
+    max-width: 540px; margin: 0 auto 36px; text-wrap: balance;
+  }
+  .hero-ctas {
+    display: inline-flex; gap: 14px; align-items: center; justify-content: center;
+  }
+
+  /* ─── FACT STRIP ─── */
+  .fact-strip {
+    margin-top: 72px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--panel);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .fact { padding: 22px 24px; border-left: 1px solid var(--rule); }
+  .fact:first-child { border-left: 0; }
+  .fact .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .fact .v { font-size: 14px; color: var(--ink); line-height: 1.35; }
+
+  /* ─── SECTION SCAFFOLD ─── */
+  section { border-bottom: 1px solid var(--rule); }
+  .section-pad { padding: 96px 0; }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 0.65fr;
+    gap: 56px; align-items: end; margin-bottom: 56px;
+  }
+  .section-head h2 {
+    font-size: 42px; line-height: 1.05; letter-spacing: -0.03em;
+    margin: 16px 0 0; font-weight: 500; max-width: 20ch; text-wrap: balance;
+  }
+  .section-head h2 em {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.02em;
+  }
+  .section-head .lede {
+    font-size: 15px; color: var(--muted); max-width: 400px; line-height: 1.6; margin: 0;
+  }
+
+  /* ─── PIPELINE ─── */
+  .pipeline {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--panel); border: 1px solid var(--rule);
+    border-radius: 16px; overflow: hidden;
+  }
+  .step {
+    padding: 28px 26px 30px; border-right: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 14px; min-height: 210px;
+  }
+  .step:last-child { border-right: 0; }
+  .step .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; color: var(--accent);
+  }
+  .step h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0; flex: 1; }
+  .step .meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted-2);
+    display: flex; justify-content: space-between; padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+  }
+
+  /* ─── SCOPE ─── */
+  .scope { background: var(--panel-2); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
+  .card-head {
+    padding: 18px 22px; border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-head h3 { font-size: 15px; font-weight: 600; margin: 0; letter-spacing: -0.005em; }
+  .card-head .count {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted-2); white-space: nowrap;
+  }
+  .row {
+    display: grid; grid-template-columns: 28px 1fr auto;
+    align-items: center; gap: 14px;
+    padding: 13px 22px; border-bottom: 1px solid var(--rule); font-size: 13.5px;
+  }
+  .row:last-child { border-bottom: 0; }
+  .row .rnum { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted-2); }
+  .row .txt { color: var(--ink-2); line-height: 1.45; }
+  .check { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; color: var(--accent); font-size: 13px; }
+  .bluedot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+  /* ─── PRICING ─── */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 0.95fr; gap: 80px; align-items: start; }
+  .price-display { padding-top: 20px; }
+  .price-display .lede {
+    font-size: 19px; line-height: 1.5; color: var(--ink-2);
+    margin: 0 0 28px; max-width: 440px; text-wrap: pretty;
+  }
+  .price-display .lede em {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic; color: var(--accent); font-weight: 400;
+  }
+  .price-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--muted);
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 5px 11px; border-radius: 999px;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact { background: var(--panel-2); }
+  .contact-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; }
+  .form {
+    background: var(--panel); border: 1px solid var(--rule);
+    border-radius: 16px; padding: 32px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  }
+  .field input, .field textarea, .field select {
+    background: var(--panel); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 11px 14px;
+    font-family: inherit; font-size: 14px; color: var(--ink);
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px rgba(138,74,50,0.12);
+  }
+  .field textarea { resize: vertical; min-height: 100px; }
+  .form-foot {
+    margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .form-foot .note { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted-2); }
+  .next-card { background: var(--panel); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
+  .next-row {
+    padding: 18px 22px; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+  }
+  .next-row:last-child { border-bottom: 0; }
+  .next-row .n { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted-2); margin-top: 2px; }
+  .next-row .body { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+  .next-row .body strong { font-weight: 600; color: var(--ink); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 28px 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  footer .footer-inner {
+    width: 100%; max-width: 1160px; padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer .mono { font-size: 11.5px; color: var(--muted-2); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .fact-strip { grid-template-columns: repeat(2, 1fr); }
+    .fact { border-top: 1px solid var(--rule); }
+    .fact:nth-child(odd) { border-left: 0; }
+    .fact:nth-child(5) { grid-column: span 2; border-left: 0; }
+    .pipeline { grid-template-columns: 1fr 1fr; }
+    .step { border-right: 1px solid var(--rule) !important; border-bottom: 1px solid var(--rule); }
+    .step:nth-child(2), .step:nth-child(4) { border-right: 0 !important; }
+    .two-col, .pricing-grid, .contact-grid, .section-head { grid-template-columns: 1fr; gap: 32px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .section-pad { padding: 72px 0; }
+    nav a:not(.btn) { display: none; }
+  }
+  @media (max-width: 640px) {
+    .container { padding: 0 20px; }
+    .mobile-nav { padding: 16px 20px 20px; }
+    footer .footer-inner { padding: 0 20px; }
+    .hero { padding: 64px 0 0; }
+    .hero p.sub { font-size: 16px; }
+    .hero-ctas { flex-direction: column; width: 100%; }
+    .hero-ctas .btn { width: 100%; justify-content: center; }
+    .fact-strip { grid-template-columns: 1fr 1fr; }
+    .fact:nth-child(5) { grid-column: span 2; }
+    .status-pill { display: none; }
+    .form-foot { flex-direction: column; align-items: flex-start; }
+    .nav-toggle { display: block; }
+    nav .btn { display: none; }
+  }
+</style>
 </head>
-<body class="bg-white text-ink antialiased">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-6 h-12 flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <a href="#" class="text-sm font-semibold text-ink tracking-tight">
-          Retro<span class="text-accent">Books</span>
-        </a>
-        <span class="hidden md:flex items-center gap-1.5 text-xs text-green-600 font-medium">
-          <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-          Accepting new engagements
-        </span>
+<!-- HEADER -->
+<header>
+  <div class="container header-inner">
+    <div style="display:flex; align-items:center;">
+      <a href="#" class="logo">RetroBooks<span class="dot">.</span></a>
+      <span class="status-pill"><span class="d"></span> Accepting new engagements</span>
+    </div>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact" class="btn btn-primary">Book a call</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact" style="color: var(--accent); font-weight: 600;">Book a call</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="border-bottom: none;">
+  <div class="container">
+    <div class="tag">
+      <span class="num">01</span>
+      <span>Catch-up bookkeeping for businesses</span>
+    </div>
+    <h1 class="hero-title">Clean up your <span class="italic">books.</span></h1>
+    <p class="sub">Messy records, missing months, mixed accounts — we reconstruct your books so you can close the gap and move forward clean.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-accent">Book a consultation →</a>
+      <a href="#how" class="btn btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="container" style="padding-left: 40px; padding-right: 40px; margin-top: 72px;">
+    <div class="fact-strip">
+      <div class="fact"><div class="k">Typical engagement</div><div class="v">3 – 36 months reconstructed</div></div>
+      <div class="fact"><div class="k">Turnaround</div><div class="v">2 – 6 weeks after intake</div></div>
+      <div class="fact"><div class="k">Quote</div><div class="v">Custom · after consultation</div></div>
+      <div class="fact"><div class="k">Reviewer</div><div class="v">Big-4 trained, every file</div></div>
+      <div class="fact"><div class="k">Response</div><div class="v">&lt; 1 business day</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how section-pad" id="how">
+  <div class="container">
+    <div class="section-head" style="grid-template-columns: 1fr 0.6fr;">
+      <div>
+        <span class="eyebrow">§ 02 — How it works</span>
+        <h2>From mess to clean, in <em>four steps</em>.</h2>
       </div>
-      <button id="mobile-menu-btn" class="md:hidden p-2 text-muted hover:text-ink" aria-label="Toggle menu">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-      <nav id="desktop-nav" class="hidden md:flex items-center gap-1 text-xs font-medium text-muted">
-        <a href="#how-it-works" class="px-3 py-1.5 rounded hover:bg-gray-100 hover:text-ink transition-colors">How It Works</a>
-        <a href="#pricing" class="px-3 py-1.5 rounded hover:bg-gray-100 hover:text-ink transition-colors">Pricing</a>
-        <a href="#contact" class="ml-2 bg-accent text-white px-3 py-1.5 rounded hover:bg-accent-dark transition-colors">Get Started</a>
-      </nav>
+      <p class="lede">A focused, time-boxed process. You send what you have; we handle the reconstruction end-to-end and hand back a reconciled, auditable set of statements.</p>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
-      <nav class="max-w-5xl mx-auto px-6 py-3 flex flex-col gap-1 text-sm font-medium text-muted">
-        <a href="#how-it-works" class="px-3 py-2 rounded hover:bg-gray-100 hover:text-ink transition-colors">How It Works</a>
-        <a href="#pricing" class="px-3 py-2 rounded hover:bg-gray-100 hover:text-ink transition-colors">Pricing</a>
-        <a href="#contact" class="px-3 py-2 rounded bg-accent text-white hover:bg-accent-dark transition-colors text-center">Get Started</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-6 py-16 md:py-20">
-      <div class="grid md:grid-cols-5 gap-10 md:gap-16 items-start">
-
-        <div class="md:col-span-3">
-          <h1 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight text-ink">
-            Clean up your books.
-          </h1>
-          <p class="mt-4 text-sm text-muted leading-relaxed max-w-md">
-            Messy records, missing months, mixed accounts — we reconstruct your books so you can close the gap and move forward clean.
-          </p>
-          <div class="mt-8">
-            <a href="#contact" class="inline-flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded hover:bg-accent-dark transition-colors text-sm">
-              Get Started
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="md:col-span-2 border border-gray-200 rounded-lg overflow-hidden text-xs">
-          <div class="px-4 py-2.5 bg-gray-50 border-b border-gray-200 text-muted font-medium uppercase tracking-wide">Engagement overview</div>
-          <div class="divide-y divide-gray-100">
-            <div class="flex justify-between items-center px-4 py-2.5">
-              <span class="text-muted">Starting price</span>
-              <span class="font-mono font-medium text-ink">$299 / mo</span>
-            </div>
-            <div class="flex justify-between items-center px-4 py-2.5">
-              <span class="text-muted">Scope</span>
-              <span class="font-medium text-ink">Any size, any depth</span>
-            </div>
-            <div class="flex justify-between items-center px-4 py-2.5">
-              <span class="text-muted">Commitment</span>
-              <span class="font-medium text-ink">Per-engagement</span>
-            </div>
-            <div class="flex justify-between items-center px-4 py-2.5">
-              <span class="text-muted">White-label</span>
-              <span class="inline-flex items-center gap-1 text-green-600 font-medium"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Available</span>
-            </div>
-            <div class="flex justify-between items-center px-4 py-2.5">
-              <span class="text-muted">Response time</span>
-              <span class="font-medium text-ink">1 business day</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section id="how-it-works" class="border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
-      <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-6">How it works</div>
-      <div class="grid md:grid-cols-4 gap-px bg-gray-200 border border-gray-200 rounded-lg overflow-hidden">
-        <div class="bg-white px-5 py-5">
-          <div class="text-xs font-mono text-muted mb-3">STEP_01</div>
-          <div class="text-xs font-semibold text-ink mb-1.5">Intake call</div>
-          <div class="text-xs text-muted leading-relaxed">We learn about your situation, records available, and what you need to move forward.</div>
-        </div>
-        <div class="bg-white px-5 py-5">
-          <div class="text-xs font-mono text-muted mb-3">STEP_02</div>
-          <div class="text-xs font-semibold text-ink mb-1.5">Scope &amp; quote</div>
-          <div class="text-xs text-muted leading-relaxed">We assess the backlog, identify gaps, and provide a straightforward quote.</div>
-        </div>
-        <div class="bg-white px-5 py-5">
-          <div class="text-xs font-mono text-muted mb-3">STEP_03</div>
-          <div class="text-xs font-semibold text-ink mb-1.5">Reconstruct</div>
-          <div class="text-xs text-muted leading-relaxed">We rebuild your books month by month — traceable, auditable, and complete.</div>
-        </div>
-        <div class="bg-white px-5 py-5">
-          <div class="text-xs font-mono text-muted mb-3">STEP_04</div>
-          <div class="text-xs font-semibold text-ink mb-1.5">Deliver</div>
-          <div class="text-xs text-muted leading-relaxed">You receive clean, organized financials ready for your accountant, lender, or next step.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scope + Who it's for -->
-  <section class="border-b border-gray-200 bg-gray-50">
-    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
-      <div class="grid md:grid-cols-2 gap-10">
-
+    <div class="pipeline">
+      <div class="step">
         <div>
-          <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Cleanup scope</div>
-          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
-            <div class="divide-y divide-gray-100 text-xs">
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Bank account reconciliation</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Credit card categorization</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Payroll and expense normalization</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Mixed personal and business transactions</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Financial statement reconstruction</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Books an accountant refused to touch</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Missing data identification and recovery</span>
-              </div>
-              <div class="flex items-center gap-3 px-4 py-2.5">
-                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span class="text-ink">Multi-year backlog reconstruction</span>
-              </div>
-            </div>
-          </div>
+          <div class="num">STEP_01</div>
+          <h3>Intake call</h3>
         </div>
-
+        <p>30 minutes. We review your current state, accounts, systems, and the gap you need closed.</p>
+        <div class="meta"><span>DURATION</span><span>~ 30 min</span></div>
+      </div>
+      <div class="step">
         <div>
-          <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Who this is for</div>
-          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
-            <div class="divide-y divide-gray-100 text-xs">
-              <div class="flex items-start gap-3 px-4 py-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
-                <span class="text-ink">Businesses behind on bookkeeping and needing a clean record</span>
-              </div>
-              <div class="flex items-start gap-3 px-4 py-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
-                <span class="text-ink">Business owners preparing for a loan, audit, sale, or new fiscal year</span>
-              </div>
-              <div class="flex items-start gap-3 px-4 py-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
-                <span class="text-ink">Accounting and bookkeeping firms with clients who have historical cleanup needs</span>
-              </div>
-              <div class="flex items-start gap-3 px-4 py-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
-                <span class="text-ink">Tax and financial advisory firms that need clean books before they can begin their work</span>
-              </div>
-              <div class="flex items-start gap-3 px-4 py-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
-                <span class="text-ink">Anyone who has fallen behind and wants to start fresh with an accurate financial record</span>
-              </div>
-            </div>
-          </div>
+          <div class="num">STEP_02</div>
+          <h3>Scope &amp; quote</h3>
         </div>
-
+        <p>Fixed quote by volume and months. No hourly surprises, no retainer required.</p>
+        <div class="meta"><span>TURNAROUND</span><span>24 – 48 hrs</span></div>
+      </div>
+      <div class="step">
+        <div>
+          <div class="num">STEP_03</div>
+          <h3>Reconstruct</h3>
+        </div>
+        <p>Reconcile, categorize, separate personal from business, and rebuild statements month-by-month.</p>
+        <div class="meta"><span>DURATION</span><span>2 – 6 wks</span></div>
+      </div>
+      <div class="step">
+        <div>
+          <div class="num">STEP_04</div>
+          <h3>Deliver</h3>
+        </div>
+        <p>Clean books in your system of choice, plus P&amp;L, balance sheet, and a reconciliation trail.</p>
+        <div class="meta"><span>FORMAT</span><span>QBO · Xero · CSV</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Pricing -->
-  <section id="pricing" class="border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
-      <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-8">Pricing</div>
-      <div class="grid md:grid-cols-2 gap-10 items-start">
-        <div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-4xl font-bold font-mono text-ink">$299</span>
-            <span class="text-sm text-muted">/ month reconstructed</span>
-          </div>
-          <p class="mt-4 text-xs text-muted leading-relaxed max-w-sm">
-            Custom pricing for larger or more complex engagements. Priced per engagement — no ongoing commitment required.
-          </p>
-          <div class="mt-6 flex flex-wrap gap-2">
-            <span class="text-xs font-medium bg-gray-100 text-muted px-2.5 py-1 rounded">Per-engagement</span>
-            <span class="text-xs font-medium bg-gray-100 text-muted px-2.5 py-1 rounded">Custom for larger scopes</span>
-            <span class="text-xs font-medium bg-gray-100 text-muted px-2.5 py-1 rounded">White-label available</span>
-          </div>
-          <div class="mt-8">
-            <a href="#contact" class="inline-flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded hover:bg-accent-dark transition-colors text-sm">
-              Get a quote
-            </a>
-          </div>
+<!-- SCOPE -->
+<section class="scope section-pad">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">§ 03 — Scope</span>
+        <h2>What cleanup covers — and <em>who it's for</em>.</h2>
+      </div>
+      <p class="lede">If your books went untouched for a year, your accountant walked, or your personal and business ran through one card — this is what we do every day.</p>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <h3>Cleanup scope</h3>
+          <span class="count">08 items</span>
         </div>
-        <div class="border border-gray-200 rounded-lg overflow-hidden text-xs">
-          <div class="px-4 py-2.5 bg-gray-50 border-b border-gray-200 text-muted font-medium uppercase tracking-wide">What you receive</div>
-          <div class="divide-y divide-gray-100">
-            <div class="flex justify-between px-4 py-2.5">
-              <span class="text-muted">Format</span>
-              <span class="font-medium text-ink">Excel workbook + schedules</span>
-            </div>
-            <div class="flex justify-between px-4 py-2.5">
-              <span class="text-muted">Work product</span>
-              <span class="font-medium text-ink">Traceable &amp; auditable</span>
-            </div>
-            <div class="flex justify-between px-4 py-2.5">
-              <span class="text-muted">Team</span>
-              <span class="font-medium text-ink">Big-4 trained accountants</span>
-            </div>
-            <div class="flex justify-between px-4 py-2.5">
-              <span class="text-muted">Scope ceiling</span>
-              <span class="font-medium text-ink">None — however far back</span>
-            </div>
-          </div>
+        <div class="row"><span class="check">✓</span><span class="txt">Bank account reconciliation</span><span class="rnum">01</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Credit card categorization</span><span class="rnum">02</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Payroll and expense normalization</span><span class="rnum">03</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Financial statement reconstruction</span><span class="rnum">04</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Mixed personal and business transactions</span><span class="rnum">05</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Accounts where prior accountant refused to work</span><span class="rnum">06</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Missing data identification</span><span class="rnum">07</span></div>
+        <div class="row"><span class="check">✓</span><span class="txt">Multi-year backlog</span><span class="rnum">08</span></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3>Who this is for</h3>
+          <span class="count">03 profiles</span>
+        </div>
+        <div class="row" style="grid-template-columns: 16px 1fr auto;"><span class="bluedot"></span><span class="txt">Businesses behind on bookkeeping</span><span class="rnum">A</span></div>
+        <div class="row" style="grid-template-columns: 16px 1fr auto;"><span class="bluedot"></span><span class="txt">Business owners needing clean records for loans, sales, or reporting</span><span class="rnum">B</span></div>
+        <div class="row" style="grid-template-columns: 16px 1fr auto;"><span class="bluedot"></span><span class="txt">Accounting and bookkeeping firms with backlog clients</span><span class="rnum">C</span></div>
+        <div class="row" style="grid-template-columns: 1fr auto; background: var(--panel-2); color: var(--muted);">
+          <span class="mono" style="font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;">Not a fit</span>
+          <span class="mono" style="font-size:11.5px; color: var(--muted);">ongoing monthly bookkeeping — ask for a referral</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Contact -->
-  <section id="contact" class="border-b border-gray-200 bg-gray-50">
-    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
-      <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-1">New engagement</div>
-      <p class="text-xs text-muted mb-8">Tell us what you're working with. We'll respond within one business day.</p>
-      <div class="grid lg:grid-cols-5 gap-10">
+<!-- PRICING -->
+<section class="section-pad" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">§ 04 — Pricing</span>
+        <h2>Custom quotes, after <em>we understand the job</em>.</h2>
+      </div>
+      <p class="lede">Every cleanup is different. We price by the months and transaction volume we rebuild — after a 30-minute call, so neither of us is guessing.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-display">
+        <p class="lede">
+          No fixed monthly price — we quote <em>per engagement</em>, after a call. That keeps small jobs honest and lets us take on the complex ones other firms won't touch.
+        </p>
+        <div class="price-tags">
+          <span class="pill">Per-engagement</span>
+          <span class="pill">No retainer</span>
+          <span class="pill">Fixed quote after scoping</span>
+        </div>
+        <a href="#contact" class="btn btn-accent">Book a consultation →</a>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3>What every engagement includes</h3>
+          <span class="count">Standard</span>
+        </div>
+        <div class="row" style="grid-template-columns: 110px 1fr auto;">
+          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;">Format</span>
+          <span class="txt">QuickBooks Online, Xero, or CSV export</span>
+          <span class="check">✓</span>
+        </div>
+        <div class="row" style="grid-template-columns: 110px 1fr auto;">
+          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;">Auditable</span>
+          <span class="txt">Traceable reconciliation trail, month-by-month</span>
+          <span class="check">✓</span>
+        </div>
+        <div class="row" style="grid-template-columns: 110px 1fr auto;">
+          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;">Tax-ready</span>
+          <span class="txt">Clean statements, handoff to your CPA</span>
+          <span class="check">✓</span>
+        </div>
+        <div class="row" style="grid-template-columns: 110px 1fr auto;">
+          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;">Team</span>
+          <span class="txt">Big-4 trained reviewer on every engagement</span>
+          <span class="check">✓</span>
+        </div>
+        <div class="row" style="grid-template-columns: 110px 1fr auto;">
+          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;">White-label</span>
+          <span class="txt">Optional — deliver under your firm's brand</span>
+          <span class="check">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <form action="#" method="POST" class="lg:col-span-3 space-y-4">
-          <div>
-            <label for="company-name" class="block text-xs font-medium text-muted mb-1.5">Company name</label>
-            <input type="text" id="company-name" name="company_name" required
-              class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
-              placeholder="Your business or firm name">
+<!-- CONTACT -->
+<section class="contact section-pad" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">§ 05 — New engagement</span>
+        <h2>Tell us what you're <em>working with</em>.</h2>
+      </div>
+      <p class="lede">Send us the rough shape of the mess. We'll respond within one business day with next steps and a scoping window.</p>
+    </div>
+    <div class="contact-grid">
+      <form class="form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Sent ✓'; this.querySelector('button[type=submit]').style.background='var(--green)';">
+        <div class="form-grid">
+          <div class="field">
+            <label>Company</label>
+            <input type="text" placeholder="Acme Holdings LLC" />
           </div>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label for="first-name" class="block text-xs font-medium text-muted mb-1.5">First name</label>
-              <input type="text" id="first-name" name="first_name" required
-                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
-                placeholder="First">
-            </div>
-            <div>
-              <label for="last-name" class="block text-xs font-medium text-muted mb-1.5">Last name</label>
-              <input type="text" id="last-name" name="last_name" required
-                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
-                placeholder="Last">
-            </div>
+          <div class="field">
+            <label>Name</label>
+            <input type="text" placeholder="Jane Doe" />
           </div>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label for="email" class="block text-xs font-medium text-muted mb-1.5">Email</label>
-              <input type="email" id="email" name="email" required
-                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
-                placeholder="you@yourbusiness.com">
-            </div>
-            <div>
-              <label for="phone" class="block text-xs font-medium text-muted mb-1.5">Phone</label>
-              <input type="tel" id="phone" name="phone"
-                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
-                placeholder="(555) 000-0000">
-            </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" placeholder="jane@acme.co" />
           </div>
-          <div>
-            <label for="volume" class="block text-xs font-medium text-muted mb-1.5">How far back do the books need to go?</label>
-            <select id="volume" name="backlog_size"
-              class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors">
+          <div class="field">
+            <label>Phone</label>
+            <input type="tel" placeholder="(555) 010-0142" />
+          </div>
+          <div class="field">
+            <label>Monthly volume</label>
+            <select>
               <option value="" disabled selected>Select range</option>
-              <option value="under-6">Under 6 months</option>
-              <option value="6-12">6 – 12 months</option>
-              <option value="1-2-years">1 – 2 years</option>
-              <option value="2-plus-years">2+ years</option>
-              <option value="not-sure">Not sure</option>
+              <option>&lt; 100 transactions / mo</option>
+              <option>100 – 500 transactions / mo</option>
+              <option>500 – 2,000 transactions / mo</option>
+              <option>2,000+ transactions / mo</option>
+              <option>Not sure</option>
             </select>
           </div>
-          <div>
-            <label for="notes" class="block text-xs font-medium text-muted mb-1.5">Tell us about the situation</label>
-            <textarea id="notes" name="notes" rows="3"
-              class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors resize-none"
-              placeholder="What's the state of the books, what you need, any context that helps..."></textarea>
+          <div class="field">
+            <label>Months behind</label>
+            <select>
+              <option value="" disabled selected>Select range</option>
+              <option>1 – 3 months</option>
+              <option>3 – 12 months</option>
+              <option>1 – 2 years</option>
+              <option>2+ years</option>
+            </select>
           </div>
-          <div>
-            <button type="submit"
-              class="inline-flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded hover:bg-accent-dark transition-colors text-xs">
-              Submit inquiry
-            </button>
-          </div>
-        </form>
-
-        <div class="lg:col-span-2">
-          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white text-xs">
-            <div class="px-4 py-2.5 bg-gray-50 border-b border-gray-200 text-muted font-medium uppercase tracking-wide">What happens next</div>
-            <div class="divide-y divide-gray-100">
-              <div class="flex gap-3 px-4 py-3">
-                <span class="font-mono text-muted w-4 flex-shrink-0">01</span>
-                <span class="text-ink">We review your inquiry</span>
-              </div>
-              <div class="flex gap-3 px-4 py-3">
-                <span class="font-mono text-muted w-4 flex-shrink-0">02</span>
-                <span class="text-ink">Brief intake call to understand the situation</span>
-              </div>
-              <div class="flex gap-3 px-4 py-3">
-                <span class="font-mono text-muted w-4 flex-shrink-0">03</span>
-                <span class="text-ink">Scoped quote provided</span>
-              </div>
-              <div class="flex gap-3 px-4 py-3">
-                <span class="font-mono text-muted w-4 flex-shrink-0">04</span>
-                <span class="text-ink">Work begins on your timeline</span>
-              </div>
-            </div>
+          <div class="field full">
+            <label>Notes</label>
+            <textarea placeholder="Mixed personal and business on one card through 2024. Last reconciled March 2024. Need clean books for an SBA loan application in June."></textarea>
           </div>
         </div>
+        <div class="form-foot">
+          <span class="note">We reply within 1 business day · no newsletters</span>
+          <button type="submit" class="btn btn-accent">Send request →</button>
+        </div>
+      </form>
 
-      </div>
+      <aside class="next-card">
+        <div class="card-head">
+          <h3>What happens next</h3>
+          <span class="count">04 steps</span>
+        </div>
+        <div class="next-row">
+          <span class="n">01</span>
+          <span class="body"><strong>We reply.</strong> Within one business day, with a 30-minute slot.</span>
+        </div>
+        <div class="next-row">
+          <span class="n">02</span>
+          <span class="body"><strong>Intake call.</strong> We map what you have, what's missing, and what clean looks like.</span>
+        </div>
+        <div class="next-row">
+          <span class="n">03</span>
+          <span class="body"><strong>Fixed quote.</strong> 24 – 48 hours later. No retainer, no hourly.</span>
+        </div>
+        <div class="next-row">
+          <span class="n">04</span>
+          <span class="body"><strong>Reconstruction begins.</strong> Weekly status, clean delivery at the end.</span>
+        </div>
+      </aside>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-      <a href="#" class="text-sm font-semibold text-ink tracking-tight">
-        Retro<span class="text-accent">Books</span>
-      </a>
-      <p class="text-xs text-muted">&copy; 2026 RetroBooks</p>
-    </div>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="logo">RetroBooks<span class="dot">.</span></div>
+    <div class="mono">© 2026 RetroBooks · All rights reserved</div>
+  </div>
+</footer>
 
-  <script>
-    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
-    });
-    document.querySelectorAll('#mobile-menu a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        document.getElementById('mobile-menu').classList.add('hidden');
-      });
-    });
-  </script>
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+</script>
 
 </body>
 </html>
