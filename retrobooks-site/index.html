@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RetroBooks — Catch-Up Bookkeeping for Tax Resolution Firms</title>
-  <meta name="description" content="RetroBooks reconstructs messy, incomplete, or outdated financials so tax resolution firms can move cases forward with clean, accurate books.">
+  <title>RetroBooks — Historical Bookkeeping Cleanup</title>
+  <meta name="description" content="RetroBooks reconstructs messy, incomplete, or outdated financial records so businesses and firms can move forward with clean, accurate books.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,13 +13,12 @@
           colors: {
             ink: '#111827',
             muted: '#6b7280',
-            border: '#e5e7eb',
-            subtle: '#f9fafb',
             accent: '#2563eb',
             'accent-dark': '#1d4ed8',
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
           },
         }
       }
@@ -30,219 +29,362 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 <body class="bg-white text-ink antialiased">
 
   <!-- Header -->
-  <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-lg font-semibold text-ink tracking-tight">
-        Retro<span class="text-accent">Books</span>
-      </a>
-      <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-500 hover:text-ink" aria-label="Toggle menu">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-6 h-12 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-sm font-semibold text-ink tracking-tight">
+          Retro<span class="text-accent">Books</span>
+        </a>
+        <span class="hidden md:flex items-center gap-1.5 text-xs text-green-600 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+          Accepting new engagements
+        </span>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-muted hover:text-ink" aria-label="Toggle menu">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
-      <nav id="desktop-nav" class="hidden md:flex items-center space-x-7 text-sm font-medium text-muted">
-        <a href="index.html" class="text-ink">Home</a>
-        <a href="how-it-works.html" class="hover:text-ink transition-colors">How It Works</a>
-        <a href="pricing.html" class="hover:text-ink transition-colors">Pricing</a>
-        <a href="tax-resolution-firms.html" class="hover:text-ink transition-colors">For Tax Firms</a>
-        <a href="contact.html" class="bg-ink text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors text-sm">Get in Touch</a>
+      <nav id="desktop-nav" class="hidden md:flex items-center gap-1 text-xs font-medium text-muted">
+        <a href="#how-it-works" class="px-3 py-1.5 rounded hover:bg-gray-100 hover:text-ink transition-colors">How It Works</a>
+        <a href="#pricing" class="px-3 py-1.5 rounded hover:bg-gray-100 hover:text-ink transition-colors">Pricing</a>
+        <a href="#contact" class="ml-2 bg-accent text-white px-3 py-1.5 rounded hover:bg-accent-dark transition-colors">Get Started</a>
       </nav>
     </div>
     <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
-      <nav class="max-w-5xl mx-auto px-6 py-4 flex flex-col space-y-3 text-sm font-medium text-muted">
-        <a href="index.html" class="text-ink py-1">Home</a>
-        <a href="how-it-works.html" class="hover:text-ink py-1 transition-colors">How It Works</a>
-        <a href="pricing.html" class="hover:text-ink py-1 transition-colors">Pricing</a>
-        <a href="tax-resolution-firms.html" class="hover:text-ink py-1 transition-colors">For Tax Firms</a>
-        <a href="contact.html" class="bg-ink text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors text-center text-sm">Get in Touch</a>
+      <nav class="max-w-5xl mx-auto px-6 py-3 flex flex-col gap-1 text-sm font-medium text-muted">
+        <a href="#how-it-works" class="px-3 py-2 rounded hover:bg-gray-100 hover:text-ink transition-colors">How It Works</a>
+        <a href="#pricing" class="px-3 py-2 rounded hover:bg-gray-100 hover:text-ink transition-colors">Pricing</a>
+        <a href="#contact" class="px-3 py-2 rounded bg-accent text-white hover:bg-accent-dark transition-colors text-center">Get Started</a>
       </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="border-b border-gray-100">
-    <div class="max-w-5xl mx-auto px-6 py-24 md:py-32">
-      <div class="max-w-2xl">
-        <h1 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight text-ink">
-          Clean up your books.
-        </h1>
-        <p class="mt-6 text-lg text-muted leading-relaxed">
-          We reconstruct messy, incomplete, or outdated financials — so tax resolution firms can move cases forward with clean, accurate books.
-        </p>
-        <div class="mt-10">
-          <a href="contact.html" class="inline-block bg-accent text-white font-medium px-6 py-3 rounded-md hover:bg-accent-dark transition-colors text-sm">
-            Start cleanup
-          </a>
+  <section class="border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-6 py-16 md:py-20">
+      <div class="grid md:grid-cols-5 gap-10 md:gap-16 items-start">
+
+        <div class="md:col-span-3">
+          <h1 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight text-ink">
+            Clean up your books.
+          </h1>
+          <p class="mt-4 text-sm text-muted leading-relaxed max-w-md">
+            Messy records, missing months, mixed accounts — we reconstruct your books so you can close the gap and move forward clean.
+          </p>
+          <div class="mt-8">
+            <a href="#contact" class="inline-flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded hover:bg-accent-dark transition-colors text-sm">
+              Get Started
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
+
+        <div class="md:col-span-2 border border-gray-200 rounded-lg overflow-hidden text-xs">
+          <div class="px-4 py-2.5 bg-gray-50 border-b border-gray-200 text-muted font-medium uppercase tracking-wide">Engagement overview</div>
+          <div class="divide-y divide-gray-100">
+            <div class="flex justify-between items-center px-4 py-2.5">
+              <span class="text-muted">Starting price</span>
+              <span class="font-mono font-medium text-ink">$299 / mo</span>
+            </div>
+            <div class="flex justify-between items-center px-4 py-2.5">
+              <span class="text-muted">Scope</span>
+              <span class="font-medium text-ink">Any size, any depth</span>
+            </div>
+            <div class="flex justify-between items-center px-4 py-2.5">
+              <span class="text-muted">Commitment</span>
+              <span class="font-medium text-ink">Per-engagement</span>
+            </div>
+            <div class="flex justify-between items-center px-4 py-2.5">
+              <span class="text-muted">White-label</span>
+              <span class="inline-flex items-center gap-1 text-green-600 font-medium"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Available</span>
+            </div>
+            <div class="flex justify-between items-center px-4 py-2.5">
+              <span class="text-muted">Response time</span>
+              <span class="font-medium text-ink">1 business day</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- How it works -->
-  <section class="border-b border-gray-100">
-    <div class="max-w-5xl mx-auto px-6 py-20 md:py-24">
-      <h2 class="text-sm font-semibold text-muted uppercase tracking-widest mb-10">How it works</h2>
-      <div class="grid md:grid-cols-4 gap-0 divide-y md:divide-y-0 md:divide-x divide-gray-100">
-        <div class="py-6 md:py-0 md:pr-8">
-          <div class="text-xs font-semibold text-muted mb-3">01</div>
-          <div class="text-sm font-medium text-ink mb-1">Submit documents</div>
-          <div class="text-sm text-muted leading-relaxed">Share your records, bank statements, and any available source data.</div>
+  <section id="how-it-works" class="border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
+      <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-6">How it works</div>
+      <div class="grid md:grid-cols-4 gap-px bg-gray-200 border border-gray-200 rounded-lg overflow-hidden">
+        <div class="bg-white px-5 py-5">
+          <div class="text-xs font-mono text-muted mb-3">STEP_01</div>
+          <div class="text-xs font-semibold text-ink mb-1.5">Intake call</div>
+          <div class="text-xs text-muted leading-relaxed">We learn about your situation, records available, and what you need to move forward.</div>
         </div>
-        <div class="py-6 md:py-0 md:px-8">
-          <div class="text-xs font-semibold text-muted mb-3">02</div>
-          <div class="text-sm font-medium text-ink mb-1">We organize and review</div>
-          <div class="text-sm text-muted leading-relaxed">We assess scope, identify gaps, and provide a clear quote before work begins.</div>
+        <div class="bg-white px-5 py-5">
+          <div class="text-xs font-mono text-muted mb-3">STEP_02</div>
+          <div class="text-xs font-semibold text-ink mb-1.5">Scope &amp; quote</div>
+          <div class="text-xs text-muted leading-relaxed">We assess the backlog, identify gaps, and provide a straightforward quote.</div>
         </div>
-        <div class="py-6 md:py-0 md:px-8">
-          <div class="text-xs font-semibold text-muted mb-3">03</div>
-          <div class="text-sm font-medium text-ink mb-1">We reconstruct your books</div>
-          <div class="text-sm text-muted leading-relaxed">Our team rebuilds your financials month by month with documented methodology.</div>
+        <div class="bg-white px-5 py-5">
+          <div class="text-xs font-mono text-muted mb-3">STEP_03</div>
+          <div class="text-xs font-semibold text-ink mb-1.5">Reconstruct</div>
+          <div class="text-xs text-muted leading-relaxed">We rebuild your books month by month — traceable, auditable, and complete.</div>
         </div>
-        <div class="py-6 md:py-0 md:pl-8">
-          <div class="text-xs font-semibold text-muted mb-3">04</div>
-          <div class="text-sm font-medium text-ink mb-1">You receive clean financials</div>
-          <div class="text-sm text-muted leading-relaxed">Reconstructed statements, ledgers, and schedules — ready for IRS or tax work.</div>
+        <div class="bg-white px-5 py-5">
+          <div class="text-xs font-mono text-muted mb-3">STEP_04</div>
+          <div class="text-xs font-semibold text-ink mb-1.5">Deliver</div>
+          <div class="text-xs text-muted leading-relaxed">You receive clean, organized financials ready for your accountant, lender, or next step.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Typical cleanup includes -->
-  <section class="border-b border-gray-100 bg-subtle">
-    <div class="max-w-5xl mx-auto px-6 py-20 md:py-24">
-      <div class="max-w-xl">
-        <h2 class="text-sm font-semibold text-muted uppercase tracking-widest mb-8">Typical cleanup includes</h2>
-        <ul class="space-y-3">
-          <li class="flex items-center gap-3 text-sm text-ink">
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-            Bank account reconciliation
-          </li>
-          <li class="flex items-center gap-3 text-sm text-ink">
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-            Credit card categorization
-          </li>
-          <li class="flex items-center gap-3 text-sm text-ink">
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-            Payroll and expense normalization
-          </li>
-          <li class="flex items-center gap-3 text-sm text-ink">
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-            Financial statement reconstruction
-          </li>
-          <li class="flex items-center gap-3 text-sm text-ink">
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-            Missing data identification
-          </li>
-          <li class="flex items-center gap-3 text-sm text-ink">
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-            Multi-year backlog coverage (up to 24 months standard)
-          </li>
-        </ul>
+  <!-- Scope + Who it's for -->
+  <section class="border-b border-gray-200 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
+      <div class="grid md:grid-cols-2 gap-10">
+
+        <div>
+          <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Cleanup scope</div>
+          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+            <div class="divide-y divide-gray-100 text-xs">
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Bank account reconciliation</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Credit card categorization</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Payroll and expense normalization</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Mixed personal and business transactions</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Financial statement reconstruction</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Books an accountant refused to touch</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Missing data identification and recovery</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2.5">
+                <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span class="text-ink">Multi-year backlog reconstruction</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Who this is for</div>
+          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+            <div class="divide-y divide-gray-100 text-xs">
+              <div class="flex items-start gap-3 px-4 py-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
+                <span class="text-ink">Businesses behind on bookkeeping and needing a clean record</span>
+              </div>
+              <div class="flex items-start gap-3 px-4 py-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
+                <span class="text-ink">Business owners preparing for a loan, audit, sale, or new fiscal year</span>
+              </div>
+              <div class="flex items-start gap-3 px-4 py-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
+                <span class="text-ink">Accounting and bookkeeping firms with clients who have historical cleanup needs</span>
+              </div>
+              <div class="flex items-start gap-3 px-4 py-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
+                <span class="text-ink">Tax and financial advisory firms that need clean books before they can begin their work</span>
+              </div>
+              <div class="flex items-start gap-3 px-4 py-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1"></span>
+                <span class="text-ink">Anyone who has fallen behind and wants to start fresh with an accurate financial record</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Who this is for -->
-  <section class="border-b border-gray-100">
-    <div class="max-w-5xl mx-auto px-6 py-20 md:py-24">
-      <div class="grid md:grid-cols-2 gap-16">
+  <!-- Pricing -->
+  <section id="pricing" class="border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
+      <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-8">Pricing</div>
+      <div class="grid md:grid-cols-2 gap-10 items-start">
         <div>
-          <h2 class="text-sm font-semibold text-muted uppercase tracking-widest mb-8">Who this is for</h2>
-          <ul class="space-y-3">
-            <li class="flex items-center gap-3 text-sm text-ink">
-              <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-              Tax resolution firms with bookkeeping backlogs
-            </li>
-            <li class="flex items-center gap-3 text-sm text-ink">
-              <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-              Clients switching accounting systems
-            </li>
-            <li class="flex items-center gap-3 text-sm text-ink">
-              <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-              Cases with messy or incomplete records
-            </li>
-            <li class="flex items-center gap-3 text-sm text-ink">
-              <span class="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
-              Firms needing clean financials for IRS or tax reporting
-            </li>
-          </ul>
+          <div class="flex items-baseline gap-2">
+            <span class="text-4xl font-bold font-mono text-ink">$299</span>
+            <span class="text-sm text-muted">/ month reconstructed</span>
+          </div>
+          <p class="mt-4 text-xs text-muted leading-relaxed max-w-sm">
+            Custom pricing for larger or more complex engagements. Priced per engagement — no ongoing commitment required.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="text-xs font-medium bg-gray-100 text-muted px-2.5 py-1 rounded">Per-engagement</span>
+            <span class="text-xs font-medium bg-gray-100 text-muted px-2.5 py-1 rounded">Custom for larger scopes</span>
+            <span class="text-xs font-medium bg-gray-100 text-muted px-2.5 py-1 rounded">White-label available</span>
+          </div>
+          <div class="mt-8">
+            <a href="#contact" class="inline-flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded hover:bg-accent-dark transition-colors text-sm">
+              Get a quote
+            </a>
+          </div>
         </div>
-        <div>
-          <h2 class="text-sm font-semibold text-muted uppercase tracking-widest mb-8">Pricing</h2>
-          <p class="text-2xl font-semibold text-ink tracking-tight">Starting at $299</p>
-          <p class="text-sm text-muted mt-1">per month of books reconstructed</p>
-          <p class="text-sm text-muted mt-4 leading-relaxed">Custom pricing based on complexity, months in backlog, and records available. No long-term contracts.</p>
-          <div class="mt-6">
-            <a href="pricing.html" class="text-sm text-accent hover:text-accent-dark font-medium transition-colors">View pricing details &rarr;</a>
+        <div class="border border-gray-200 rounded-lg overflow-hidden text-xs">
+          <div class="px-4 py-2.5 bg-gray-50 border-b border-gray-200 text-muted font-medium uppercase tracking-wide">What you receive</div>
+          <div class="divide-y divide-gray-100">
+            <div class="flex justify-between px-4 py-2.5">
+              <span class="text-muted">Format</span>
+              <span class="font-medium text-ink">Excel workbook + schedules</span>
+            </div>
+            <div class="flex justify-between px-4 py-2.5">
+              <span class="text-muted">Work product</span>
+              <span class="font-medium text-ink">Traceable &amp; auditable</span>
+            </div>
+            <div class="flex justify-between px-4 py-2.5">
+              <span class="text-muted">Team</span>
+              <span class="font-medium text-ink">Big-4 trained accountants</span>
+            </div>
+            <div class="flex justify-between px-4 py-2.5">
+              <span class="text-muted">Scope ceiling</span>
+              <span class="font-medium text-ink">None — however far back</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section>
-    <div class="max-w-5xl mx-auto px-6 py-20 md:py-24">
-      <div class="max-w-lg">
-        <h2 class="text-2xl md:text-3xl font-bold text-ink tracking-tight">
-          Get your books back in order.
-        </h2>
-        <p class="mt-4 text-muted text-base leading-relaxed">
-          Tell us about your backlog. We'll review the scope and provide a clear quote — usually within one business day.
-        </p>
-        <div class="mt-8">
-          <a href="contact.html" class="inline-block bg-accent text-white font-medium px-6 py-3 rounded-md hover:bg-accent-dark transition-colors text-sm">
-            Start cleanup
-          </a>
+  <!-- Contact -->
+  <section id="contact" class="border-b border-gray-200 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
+      <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-1">New engagement</div>
+      <p class="text-xs text-muted mb-8">Tell us what you're working with. We'll respond within one business day.</p>
+      <div class="grid lg:grid-cols-5 gap-10">
+
+        <form action="#" method="POST" class="lg:col-span-3 space-y-4">
+          <div>
+            <label for="company-name" class="block text-xs font-medium text-muted mb-1.5">Company name</label>
+            <input type="text" id="company-name" name="company_name" required
+              class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+              placeholder="Your business or firm name">
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="first-name" class="block text-xs font-medium text-muted mb-1.5">First name</label>
+              <input type="text" id="first-name" name="first_name" required
+                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+                placeholder="First">
+            </div>
+            <div>
+              <label for="last-name" class="block text-xs font-medium text-muted mb-1.5">Last name</label>
+              <input type="text" id="last-name" name="last_name" required
+                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+                placeholder="Last">
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="email" class="block text-xs font-medium text-muted mb-1.5">Email</label>
+              <input type="email" id="email" name="email" required
+                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+                placeholder="you@yourbusiness.com">
+            </div>
+            <div>
+              <label for="phone" class="block text-xs font-medium text-muted mb-1.5">Phone</label>
+              <input type="tel" id="phone" name="phone"
+                class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+                placeholder="(555) 000-0000">
+            </div>
+          </div>
+          <div>
+            <label for="volume" class="block text-xs font-medium text-muted mb-1.5">How far back do the books need to go?</label>
+            <select id="volume" name="backlog_size"
+              class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors">
+              <option value="" disabled selected>Select range</option>
+              <option value="under-6">Under 6 months</option>
+              <option value="6-12">6 – 12 months</option>
+              <option value="1-2-years">1 – 2 years</option>
+              <option value="2-plus-years">2+ years</option>
+              <option value="not-sure">Not sure</option>
+            </select>
+          </div>
+          <div>
+            <label for="notes" class="block text-xs font-medium text-muted mb-1.5">Tell us about the situation</label>
+            <textarea id="notes" name="notes" rows="3"
+              class="w-full px-3 py-2 border border-gray-200 rounded text-xs text-ink placeholder-gray-400 bg-white focus:ring-1 focus:ring-accent focus:border-accent transition-colors resize-none"
+              placeholder="What's the state of the books, what you need, any context that helps..."></textarea>
+          </div>
+          <div>
+            <button type="submit"
+              class="inline-flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded hover:bg-accent-dark transition-colors text-xs">
+              Submit inquiry
+            </button>
+          </div>
+        </form>
+
+        <div class="lg:col-span-2">
+          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white text-xs">
+            <div class="px-4 py-2.5 bg-gray-50 border-b border-gray-200 text-muted font-medium uppercase tracking-wide">What happens next</div>
+            <div class="divide-y divide-gray-100">
+              <div class="flex gap-3 px-4 py-3">
+                <span class="font-mono text-muted w-4 flex-shrink-0">01</span>
+                <span class="text-ink">We review your inquiry</span>
+              </div>
+              <div class="flex gap-3 px-4 py-3">
+                <span class="font-mono text-muted w-4 flex-shrink-0">02</span>
+                <span class="text-ink">Brief intake call to understand the situation</span>
+              </div>
+              <div class="flex gap-3 px-4 py-3">
+                <span class="font-mono text-muted w-4 flex-shrink-0">03</span>
+                <span class="text-ink">Scoped quote provided</span>
+              </div>
+              <div class="flex gap-3 px-4 py-3">
+                <span class="font-mono text-muted w-4 flex-shrink-0">04</span>
+                <span class="text-ink">Work begins on your timeline</span>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-gray-100 bg-subtle">
-    <div class="max-w-5xl mx-auto px-6 py-12">
-      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-        <div>
-          <a href="index.html" class="text-base font-semibold text-ink tracking-tight">
-            Retro<span class="text-accent">Books</span>
-          </a>
-          <p class="mt-3 text-sm text-muted max-w-xs leading-relaxed">
-            Catch-up bookkeeping and historical book reconstruction for tax resolution firms.
-          </p>
-        </div>
-        <div class="flex gap-12 text-sm">
-          <div>
-            <div class="font-medium text-ink mb-3">Pages</div>
-            <ul class="space-y-2 text-muted">
-              <li><a href="index.html" class="hover:text-ink transition-colors">Home</a></li>
-              <li><a href="how-it-works.html" class="hover:text-ink transition-colors">How It Works</a></li>
-              <li><a href="pricing.html" class="hover:text-ink transition-colors">Pricing</a></li>
-              <li><a href="tax-resolution-firms.html" class="hover:text-ink transition-colors">For Tax Firms</a></li>
-            </ul>
-          </div>
-          <div>
-            <div class="font-medium text-ink mb-3">Contact</div>
-            <ul class="space-y-2 text-muted">
-              <li><a href="contact.html" class="hover:text-ink transition-colors">Get in Touch</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="mt-10 pt-8 border-t border-gray-100 text-xs text-gray-400">
-        &copy; 2026 RetroBooks. All rights reserved.
-      </div>
+  <footer>
+    <div class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
+      <a href="#" class="text-sm font-semibold text-ink tracking-tight">
+        Retro<span class="text-accent">Books</span>
+      </a>
+      <p class="text-xs text-muted">&copy; 2026 RetroBooks</p>
     </div>
   </footer>
 
   <script>
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
       document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.add('hidden');
+      });
     });
   </script>
 
