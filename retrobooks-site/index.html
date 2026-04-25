@@ -1,669 +1,733 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RetroBooks — Catch-up bookkeeping for businesses</title>
-<meta name="description" content="Messy records, missing months, mixed accounts — we reconstruct your books so you can close the gap and move forward clean.">
+<meta name="description" content="Books a mess? We'll clean them up. Missing months, mixed-up cards, years of catch-up — ex-Big 4 humans rebuild your books in weeks, not months.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #efe6d4;
-    --panel: #f6efdd;
-    --panel-2: #e7dcc3;
-    --rule: #bfb292;
-    --rule-soft: #d6c9a8;
-    --ink: #221a11;
-    --ink-2: #3d3122;
-    --muted: #7a6a53;
-    --muted-2: #998b73;
-    --accent: #a0442a;
-    --accent-dark: #7d3520;
-    --accent-2: #6a7538;
-    --cream: #faf4e3;
+  :root{
+    --ink:#16140F;
+    --off:#F4F4F0;
+    --card:#FFFFFF;
+    --chart:#D4FF3A;
+    --rule:rgba(22,20,15,0.14);
+    --muted:#5A5A52;
+    --soft:#E9E9E2;
+    --accent:#C44E47;
+    --tile-cream:#F1E9D2;
+    --tile-sand:#E8D9B8;
+    --sans:'Inter Tight','Inter',ui-sans-serif,system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   }
-  *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
-  body {
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
-    font-size: 14px; line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: inherit; text-decoration: none; }
-  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-feature-settings: 'zero'; }
-  .serif { font-family: "Instrument Serif", Georgia, serif; }
-  .container { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
-  .eyebrow {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
-  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0;background:var(--off);color:var(--ink);font-family:var(--sans)}
+  body{font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
 
-  /* ─── HEADER ─── */
-  header {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(239,230,212,0.92);
-    backdrop-filter: saturate(1.2) blur(8px);
-    border-bottom: 3px double var(--rule);
-  }
-  .header-inner {
-    height: 68px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .logo-box {
-    border: 2px solid var(--ink);
-    padding: 4px 12px;
-    font-family: "Instrument Serif", Georgia, serif;
-    font-size: 20px;
-    letter-spacing: 0.3px;
-    line-height: 1.2;
-  }
-  .logo-box .dot { color: var(--accent); }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; color: var(--muted);
-    padding: 5px 11px;
-    margin-left: 16px;
-  }
-  .status-pill .d {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent-2); box-shadow: 0 0 0 3px rgba(106,117,56,0.18);
-  }
-  nav { display: flex; align-items: center; gap: 28px; }
-  nav a { font-size: 13px; color: var(--ink-2); }
-  nav a:hover { color: var(--accent); }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px; font-weight: 500;
-    padding: 10px 18px; border-radius: 2px;
-    border: 1px solid transparent; cursor: pointer;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
-    white-space: nowrap;
-  }
-  .btn-primary { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
-  .btn-accent {
-    background: var(--accent); color: var(--cream); border-color: var(--accent);
-    padding: 13px 24px; font-size: 13px;
-  }
-  .btn-accent:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
-  .btn-ghost {
-    background: transparent; color: var(--ink-2);
-    padding: 13px 4px; font-family: inherit; font-size: 13px;
-    text-transform: none; letter-spacing: 0;
-    border-bottom: 1px solid var(--ink-2); border-radius: 0;
-  }
-  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+  /* ─── shell ─── */
+  .container{max-width:1280px;margin:0 auto;padding:0 48px}
 
-  /* mobile nav */
-  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: var(--ink-2); }
-  .mobile-nav { display: none; border-top: 2px double var(--rule); padding: 16px 40px 20px; flex-direction: column; gap: 4px; background: var(--bg); }
-  .mobile-nav a { font-size: 14px; color: var(--ink-2); padding: 10px 0; border-bottom: 1px solid var(--rule-soft); }
-  .mobile-nav a:last-child { border-bottom: none; }
-  .mobile-nav.open { display: flex; }
+  /* ─── nav ─── */
+  .nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(244,244,240,0.92);backdrop-filter:saturate(1.2) blur(10px);-webkit-backdrop-filter:saturate(1.2) blur(10px);border-bottom:1.5px solid var(--ink)}
+  .brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;letter-spacing:-0.02em}
+  .brand-mark{width:28px;height:28px;background:var(--ink);color:var(--chart);display:grid;place-items:center;border-radius:8px;font-weight:800;font-size:16px}
+  .navlinks{display:flex;gap:26px;align-items:center;font-size:14px;font-weight:500}
+  .navlinks a{color:var(--ink)}
+  .navlinks a:hover{opacity:.7}
+  .nav-cta{background:var(--ink);color:var(--off)!important;padding:10px 18px;border-radius:999px;font-weight:600}
+  .nav-cta:hover{opacity:1;background:#000}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--ink)}
+  .mobile-nav{display:none;flex-direction:column;gap:4px;padding:12px 24px 18px;background:var(--off);border-bottom:1.5px solid var(--ink)}
+  .mobile-nav.open{display:flex}
+  .mobile-nav a{padding:10px 0;border-bottom:1px solid var(--rule);font-weight:500}
+  .mobile-nav a:last-child{border-bottom:none}
 
-  /* ─── HERO ─── */
-  .hero { padding: 112px 0 0; text-align: center; }
-  .hero .tag {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
-    margin-bottom: 28px;
-  }
-  .hero .tag::before, .hero .tag::after {
-    content: "—"; color: var(--muted-2);
-  }
-  h1.hero-title {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-size: clamp(60px, 11vw, 144px);
-    line-height: 0.94;
-    letter-spacing: -0.03em;
-    margin: 0 0 28px;
-    font-weight: 400;
-    max-width: 14ch; margin-left: auto; margin-right: auto;
-    text-wrap: balance;
-  }
-  h1.hero-title em {
-    color: var(--accent);
-    font-style: italic;
-    font-weight: 400;
-  }
-  .hero p.sub {
-    font-size: 18px;
-    line-height: 1.55;
-    color: var(--ink-2);
-    max-width: 580px;
-    margin: 0 auto 36px;
-    text-wrap: balance;
-  }
-  .hero-ctas {
-    display: inline-flex; gap: 18px; align-items: center; justify-content: center;
-  }
+  /* ─── shared ─── */
+  .kicker{display:inline-block;padding:6px 14px;background:var(--chart);border:2px solid var(--ink);border-radius:999px;font-size:11px;font-family:var(--mono);font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+  .kicker.light{background:rgba(255,255,255,0.6)}
+  .btn{display:inline-block;padding:14px 22px;border-radius:999px;font-size:14px;font-weight:600;border:2px solid var(--ink);text-decoration:none;color:var(--ink);background:transparent;white-space:nowrap;transition:transform .12s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-fill{background:var(--ink);color:var(--off)}
+  .btn-fill:hover{background:#000}
+  .btn-chart{background:var(--chart);color:var(--ink);border-color:var(--chart)}
+  .btn-chart:hover{filter:brightness(.95)}
+  .card{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:28px}
+  .icon-circle{width:56px;height:56px;border-radius:50%;background:var(--chart);border:2.5px solid var(--ink);display:grid;place-items:center;flex-shrink:0}
 
-  /* ─── FACT STRIP ─── */
-  .fact-strip {
-    margin-top: 88px;
-    border-top: 3px double var(--rule);
-    border-bottom: 3px double var(--rule);
-    background: var(--panel);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-  }
-  .fact {
-    padding: 24px 26px;
-    border-left: 1px dashed var(--rule);
-  }
-  .fact:first-child { border-left: 0; }
-  .fact .k {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 8px;
-  }
-  .fact .v { font-size: 14px; color: var(--ink); line-height: 1.4; }
+  /* ─── hero ─── */
+  .hero{padding:40px 48px 80px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;max-width:1280px;margin:0 auto}
+  .hero h1{font-size:92px;line-height:.94;letter-spacing:-0.04em;font-weight:700;margin:0 0 24px;text-wrap:balance}
+  .hl{background:var(--chart);padding:0 8px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .hero .lede{font-size:18px;line-height:1.5;color:var(--muted);max-width:520px;margin:0 0 32px}
+  .hero-ctas{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+  .hero-trust{display:flex;gap:24px;font-size:13px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em;flex-wrap:wrap}
+  .hero-art{padding:18px;background:var(--card);border:2px solid var(--ink);border-radius:18px}
 
-  /* ─── SECTION SCAFFOLD ─── */
-  section { border-bottom: 3px double var(--rule); }
-  .section-pad { padding: 112px 0; }
-  .section-head {
-    display: grid;
-    grid-template-columns: 1fr 0.75fr;
-    gap: 56px;
-    align-items: end;
-    margin-bottom: 56px;
-  }
-  .section-head h2 {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-size: 56px;
-    line-height: 1;
-    letter-spacing: -0.025em;
-    margin: 18px 0 0;
-    font-weight: 400;
-    max-width: 20ch;
-    text-wrap: balance;
-  }
-  .section-head h2 em {
-    font-style: italic; color: var(--accent); font-weight: 400;
-  }
-  .section-head .lede {
-    font-size: 15px; color: var(--ink-2); max-width: 400px; line-height: 1.6; margin: 0;
-  }
+  /* ─── section frame ─── */
+  section{border-top:2px solid var(--ink)}
+  .section-pad{padding:80px 48px}
+  .section-head{margin-bottom:40px;max-width:980px;margin-left:auto;margin-right:auto}
+  .section-head .kicker{margin-bottom:16px}
+  .section-head h2{font-size:64px;line-height:.98;letter-spacing:-0.035em;font-weight:700;margin:0 0 14px;max-width:980px;text-wrap:balance}
+  .section-head h2.center,.section-head.center{text-align:center}
+  .section-head h2.smaller{font-size:56px;line-height:1;letter-spacing:-0.035em}
+  .section-head p{font-size:17px;line-height:1.5;color:var(--muted);margin:0;max-width:620px}
+  .section-head.center p{margin-left:auto;margin-right:auto}
 
-  /* ─── HOW IT WORKS ─── */
-  .pipeline {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background: var(--panel);
-    border: 2px solid var(--ink);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .step {
-    padding: 28px 26px 30px;
-    border-right: 1px solid var(--rule);
-    display: flex; flex-direction: column; gap: 14px;
-    min-height: 230px;
-    background: var(--panel);
-    position: relative;
-  }
-  .step:last-child { border-right: 0; }
-  .step .num {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px; letter-spacing: 0.15em; color: var(--accent);
-  }
-  .step h3 {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-size: 26px; font-weight: 400; letter-spacing: -0.01em;
-    margin: 0;
-  }
-  .step p {
-    font-size: 13.5px; color: var(--ink-2); line-height: 1.55; margin: 0; flex: 1;
-  }
-  .step .meta {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em;
-    display: flex; justify-content: space-between; padding-top: 12px;
-    border-top: 1px dashed var(--rule);
-  }
+  /* ─── seen worse 6-tile grid ─── */
+  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1200px;margin:0 auto}
+  .tile-card{display:flex;flex-direction:column;gap:16px;padding:22px}
+  .tile{border:2.5px solid var(--ink);border-radius:14px;height:180px;position:relative;overflow:hidden;display:grid;place-items:center}
+  .tile.bg-chart{background:var(--chart)}
+  .tile.bg-cream{background:var(--tile-cream)}
+  .tile.bg-sand{background:var(--tile-sand)}
+  .tile .spark1{position:absolute;top:14px;right:18px;width:14px;height:14px}
+  .tile .spark2{position:absolute;bottom:16px;left:22px;width:10px;height:10px}
+  .tile-card h3{font-size:20px;font-weight:700;letter-spacing:-0.02em;margin:4px 0 0}
+  .tile-card p{font-size:14px;line-height:1.55;color:var(--muted);margin:0}
 
-  /* ─── SCOPE ─── */
-  .scope { background: var(--panel-2); }
-  .two-col {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
-  }
-  .card {
-    background: var(--panel);
-    border: 2px solid var(--ink);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .card-head {
-    padding: 18px 22px;
-    border-bottom: 1px solid var(--rule);
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--cream);
-  }
-  .card-head h3 {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-size: 22px; font-weight: 400; margin: 0; letter-spacing: -0.005em;
-  }
-  .card-head .count {
-    font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted);
-    letter-spacing: 0.1em; white-space: nowrap;
-  }
-  .row {
-    display: grid;
-    grid-template-columns: 28px 1fr auto;
-    align-items: center; gap: 14px;
-    padding: 14px 22px;
-    border-bottom: 1px dashed var(--rule);
-    font-size: 13.5px;
-  }
-  .row:last-child { border-bottom: 0; }
-  .row .rnum {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10.5px; color: var(--muted); letter-spacing: 0.05em;
-  }
-  .row .txt { color: var(--ink-2); line-height: 1.45; }
-  .check { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; color: var(--accent); font-size: 13px; }
-  .bluedot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-left: 4px; }
+  /* ─── inline CTA strip ─── */
+  .cta-strip-wrap{padding:0 48px 48px}
+  .cta-strip{max-width:1200px;margin:0 auto;background:var(--ink);color:var(--off);border:2px solid var(--ink);border-radius:18px;padding:28px 36px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .cta-strip .ttl{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
+  .cta-strip .sub{font-size:14px;color:rgba(244,244,240,0.7)}
 
-  /* ─── PRICING ─── */
-  .pricing-grid {
-    display: grid; grid-template-columns: 1fr 0.95fr; gap: 80px; align-items: start;
-  }
-  .price-display { padding-top: 20px; }
-  .price-display .lede {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-size: 26px; line-height: 1.35; color: var(--ink);
-    margin: 0 0 28px; max-width: 480px;
-    text-wrap: pretty; font-weight: 400;
-  }
-  .price-display .lede em {
-    font-style: italic; color: var(--accent); font-weight: 400;
-  }
-  .price-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
-  .pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px; letter-spacing: 0.08em; color: var(--muted);
-    background: var(--panel); border: 1px solid var(--rule);
-    padding: 5px 11px;
-  }
+  /* ─── services 2-card ─── */
+  .services-section{background:var(--soft)}
+  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:1280px;margin:0 auto}
+  .service-card{padding:36px;display:flex;flex-direction:column;gap:18px}
+  .service-card h3{font-size:28px;font-weight:700;letter-spacing:-0.02em;margin:0}
+  .service-card p{font-size:15px;line-height:1.55;color:var(--muted);margin:0}
+  .service-card .divider{height:1px;background:var(--rule);margin:6px 0}
+  .bullets{display:grid;gap:10px}
+  .bullet{display:flex;align-items:center;gap:12px;font-size:14.5px}
+  .bullet .dot{width:22px;height:22px;border-radius:50%;background:var(--chart);border:2px solid var(--ink);display:grid;place-items:center;flex-shrink:0}
 
-  /* ─── CONTACT ─── */
-  .contact { background: var(--panel-2); }
-  .contact-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; }
-  .form { background: var(--panel); border: 2px solid var(--ink); padding: 32px; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; }
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  .field.full { grid-column: 1 / -1; }
-  .field label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
-  }
-  .field input, .field textarea, .field select {
-    background: var(--cream);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    padding: 11px 14px;
-    font-family: inherit; font-size: 14px; color: var(--ink);
-    outline: none;
-    transition: border-color 120ms ease, box-shadow 120ms ease;
-    -webkit-appearance: none;
-  }
-  .field input:focus, .field textarea:focus, .field select:focus {
-    border-color: var(--accent); box-shadow: 0 0 0 3px rgba(160,68,42,0.14);
-  }
-  .field textarea { resize: vertical; min-height: 110px; }
-  .form-foot {
-    margin-top: 22px; padding-top: 20px;
-    border-top: 1px dashed var(--rule);
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    flex-wrap: wrap;
-  }
-  .form-foot .note { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+  /* ─── process timeline ─── */
+  .process-wrap{position:relative;max-width:980px;margin:0 auto}
+  .process-line{position:absolute;left:35px;top:35px;bottom:35px;width:0;border-left:3px dashed var(--ink);opacity:.35}
+  .step-row{display:grid;grid-template-columns:72px 1fr;gap:24px;margin-bottom:24px;position:relative;align-items:start}
+  .step-row:last-child{margin-bottom:0}
+  .step-row .icon-circle{width:72px;height:72px;background:var(--card)}
+  .step-card{background:var(--card);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+  .step-grid{display:grid;grid-template-columns:1.4fr 1fr;min-height:200px}
+  .step-text{padding:22px 28px;border-right:2px solid var(--ink)}
+  .step-num{font-size:13px;font-family:var(--mono);font-weight:700;color:var(--muted);letter-spacing:.16em;margin-bottom:6px}
+  .step-text h4{font-size:24px;font-weight:700;letter-spacing:-0.02em;margin:0 0 8px}
+  .step-text p{font-size:14.5px;line-height:1.55;color:var(--muted);margin:0}
+  .step-art{padding:14px;background:var(--card)}
+  .artifact{width:100%;height:100%;background:var(--soft);border-radius:12px;padding:14px;font-family:var(--sans);min-height:200px}
+  .art-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .art-eyebrow{font-size:11px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
 
-  .next-card { background: var(--panel); border: 2px solid var(--ink); overflow: hidden; }
-  .next-row { padding: 18px 22px; border-bottom: 1px dashed var(--rule); display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
-  .next-row:last-child { border-bottom: 0; }
-  .next-row .n { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent); margin-top: 2px; letter-spacing: 0.1em; }
-  .next-row .body { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
-  .next-row .body strong { font-weight: 600; color: var(--ink); }
+  /* artifact 1 — calendar */
+  .cal-nav{display:flex;gap:4px}
+  .cal-nav span{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--ink);display:grid;place-items:center;font-size:9px}
+  .cal-days{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:8px}
+  .cal-days div{text-align:center;font-size:10px;font-family:var(--mono);color:var(--muted)}
+  .cal-days div.active span{color:var(--ink);font-weight:700}
+  .cal-slots{display:grid;gap:4px}
+  .cal-slot{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--card);border:1.5px solid var(--ink);border-radius:6px;font-size:11px;font-weight:500}
+  .cal-slot.picked{background:var(--chart);font-weight:700}
+  .cal-slot .booked{font-size:10px;font-family:var(--mono);font-weight:700}
 
-  footer {
-    padding: 32px 0;
-    font-size: 12px; color: var(--muted);
-    border-top: 3px double var(--rule);
-  }
-  .footer-inner {
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  footer .mono { font-size: 11px; letter-spacing: 0.1em; }
+  /* artifact 2 — checklist */
+  .check-list{display:grid;gap:5px}
+  .check-row{display:flex;align-items:center;gap:8px;font-size:11.5px}
+  .check-row .box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--ink);display:grid;place-items:center;flex-shrink:0;background:transparent}
+  .check-row.done .box{background:var(--chart)}
+  .check-row.done span:last-child{text-decoration:line-through}
+  .check-row:not(.done){color:var(--muted)}
 
-  /* responsive */
-  @media (max-width: 1024px) {
-    .fact-strip { grid-template-columns: repeat(2, 1fr); }
-    .fact { border-top: 1px dashed var(--rule); }
-    .fact:nth-child(odd) { border-left: 0; }
-    .fact:nth-child(5) { grid-column: span 2; border-left: 0; }
-    .pipeline { grid-template-columns: 1fr 1fr; }
-    .step { border-right: 1px solid var(--rule) !important; border-bottom: 1px solid var(--rule); }
-    .step:nth-child(2), .step:nth-child(4) { border-right: 0 !important; }
-    .two-col, .pricing-grid, .contact-grid, .section-head { grid-template-columns: 1fr; gap: 32px; }
-    .form-grid { grid-template-columns: 1fr; }
-    nav a:not(.btn) { display: none; }
-    .section-pad { padding: 80px 0; }
-    .section-head h2 { font-size: 42px; }
+  /* artifact 3 — chat */
+  .chat{display:flex;flex-direction:column;gap:8px}
+  .msg{border:1.5px solid var(--ink);border-radius:8px;padding:8px 10px;background:var(--card)}
+  .msg.you{background:var(--chart)}
+  .msg.them{background:var(--ink);color:var(--chart)}
+  .msg-head{display:flex;justify-content:space-between;font-size:9.5px;font-family:var(--mono);color:var(--muted);margin-bottom:4px}
+  .msg.them .msg-head{color:rgba(212,255,58,.7)}
+  .msg-head b{color:var(--ink);font-weight:700}
+  .msg.them .msg-head b{color:var(--chart)}
+  .msg-body{font-size:11.5px;line-height:1.4}
+
+  /* artifact 4 — workbook */
+  .wb{height:100%;display:flex;flex-direction:column;padding:0;overflow:hidden}
+  .wb-head{padding:12px 14px 8px}
+  .wb-eyebrow{font-size:11px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+  .wb-title{font-size:14px;font-weight:700;letter-spacing:-0.01em}
+  .wb-body{background:var(--card);border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:8px 14px;flex:1;font-size:11px;font-family:var(--mono)}
+  .wb-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted rgba(22,20,15,.18)}
+  .wb-row.net{border-bottom:none;padding-top:5px;font-weight:700}
+  .wb-tabs{display:flex;border-top:1.5px solid var(--ink)}
+  .wb-tab{flex:1;padding:6px 4px;text-align:center;font-size:10px;font-family:var(--mono);font-weight:500;background:var(--card);border-right:1.5px solid var(--ink);letter-spacing:.06em;text-transform:uppercase}
+  .wb-tab:last-child{border-right:none}
+  .wb-tab.active{background:var(--chart);font-weight:700}
+
+  /* ─── final CTA ─── */
+  .final-cta{padding:80px 48px;background:var(--chart);display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap}
+  .final-cta h3{font-size:64px;line-height:.95;letter-spacing:-0.035em;font-weight:700;margin:0 0 14px;text-wrap:balance}
+  .final-cta p{font-size:17px;margin:0;max-width:540px}
+  .final-cta a{background:var(--ink);color:var(--chart);padding:18px 28px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid var(--ink);white-space:nowrap}
+
+  /* ─── footer ─── */
+  footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-top:2px solid var(--ink);flex-wrap:wrap;gap:12px}
+
+  /* ─── responsive ─── */
+  @media (max-width:1100px){
+    .hero h1{font-size:72px}
+    .section-head h2{font-size:52px}
+    .section-head h2.smaller{font-size:46px}
+    .final-cta h3{font-size:52px}
   }
-  @media (max-width: 640px) {
-    .container { padding: 0 20px; }
-    .mobile-nav { padding: 16px 20px 20px; }
-    .hero { padding: 72px 0 0; }
-    .hero p.sub { font-size: 16px; }
-    .hero-ctas { flex-direction: column; width: 100%; }
-    .hero-ctas .btn { width: 100%; justify-content: center; }
-    .fact-strip { grid-template-columns: 1fr 1fr; }
-    .fact:nth-child(5) { grid-column: span 2; }
-    .status-pill { display: none; }
-    .form-foot { flex-direction: column; align-items: flex-start; }
-    .nav-toggle { display: block; }
-    nav .btn { display: none; }
+  @media (max-width:880px){
+    .nav{padding:14px 24px}
+    .navlinks{display:none}
+    .nav-toggle{display:inline-flex}
+    .hero{grid-template-columns:1fr;padding:32px 24px 60px;gap:32px}
+    .hero h1{font-size:56px}
+    .section-pad{padding:60px 24px}
+    .grid-6{grid-template-columns:repeat(2,1fr)}
+    .services-grid{grid-template-columns:1fr}
+    .step-grid{grid-template-columns:1fr}
+    .step-text{border-right:none;border-bottom:2px solid var(--ink)}
+    .process-line{display:none}
+    .step-row{grid-template-columns:48px 1fr;gap:14px}
+    .step-row .icon-circle{width:48px;height:48px}
+    .final-cta{padding:60px 24px}
+    .final-cta h3{font-size:42px}
+    .cta-strip-wrap{padding:0 24px 36px}
+    .cta-strip{padding:22px 26px}
+    footer{padding:24px}
+  }
+  @media (max-width:560px){
+    .grid-6{grid-template-columns:1fr}
+    .hero h1{font-size:44px}
+    .section-head h2{font-size:36px}
+    .section-head h2.smaller{font-size:32px}
+    .final-cta h3{font-size:34px}
   }
 </style>
 </head>
 <body>
 
-<!-- ─────────── HEADER ─────────── -->
-<header>
-  <div class="container header-inner">
-    <div style="display:flex; align-items:center;">
-      <a href="#" class="logo-box">RetroBooks<span class="dot">.</span></a>
-      <span class="status-pill"><span class="d"></span> Est. 2026 · Accepting engagements</span>
+<!-- ───────── NAV ───────── -->
+<nav class="nav" aria-label="Primary">
+  <a href="#" class="brand">
+    <span class="brand-mark">r</span>
+    retrobooks
+  </a>
+  <div class="navlinks">
+    <a href="#seen-worse">What we do</a>
+    <a href="#services">Services</a>
+    <a href="#process">How it works</a>
+    <a href="https://cal.com/retro-books/30min" class="nav-cta" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Book a free call →</a>
+  </div>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" id="nav-toggle">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#seen-worse">What we do</a>
+  <a href="#services">Services</a>
+  <a href="#process">How it works</a>
+  <a href="https://cal.com/retro-books/30min" style="font-weight:700" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Book a free call →</a>
+</div>
+
+<!-- ───────── HERO ───────── -->
+<section style="border-top:none">
+  <div class="hero">
+    <div>
+      <div style="margin-bottom:28px"><span class="kicker">Catch-up bookkeeping · est. 2026</span></div>
+      <h1>Books a mess?<br>We'll <span class="hl">clean them up.</span></h1>
+      <p class="lede">Missing months. Mixed-up cards. Years of catch-up. Send what you have — ex-Big&nbsp;4 humans rebuild your books in weeks. Not months.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-fill" href="https://cal.com/retro-books/30min" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Book a free call →</a>
+        <a class="btn" href="#process">How it works</a>
+      </div>
+      <div class="hero-trust">
+        <span>✓ Ex-Big 4 reviewers</span>
+        <span>✓ Fixed quotes — no hourly</span>
+        <span>✓ &lt; 1 business day reply</span>
+      </div>
     </div>
-    <nav>
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact" class="btn btn-primary">Book_call</a>
-    </nav>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+    <div class="hero-art">
+      <svg viewBox="0 0 360 280" style="width:100%;height:auto;display:block" aria-hidden="true">
+        <path d="M40 150 Q 60 30, 200 50 T 340 130 Q 350 250, 200 260 T 60 230 Q 20 200, 40 150 Z" fill="#D4FF3A" stroke="#16140F" stroke-width="3"/>
+        <g transform="translate(60,60) rotate(-8)">
+          <rect width="62" height="80" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5"/>
+          <line x1="10" y1="16" x2="52" y2="16" stroke="#16140F" stroke-width="2"/>
+          <line x1="10" y1="28" x2="44" y2="28" stroke="#16140F" stroke-width="2"/>
+          <line x1="10" y1="40" x2="50" y2="40" stroke="#16140F" stroke-width="2"/>
+          <line x1="10" y1="52" x2="36" y2="52" stroke="#16140F" stroke-width="2"/>
+          <line x1="10" y1="64" x2="48" y2="64" stroke="#16140F" stroke-width="2"/>
+        </g>
+        <g transform="translate(140,80)">
+          <rect x="0" y="8" width="160" height="140" rx="4" fill="#FFFFFF" stroke="#16140F" stroke-width="3"/>
+          <line x1="80" y1="8" x2="80" y2="148" stroke="#16140F" stroke-width="2.5"/>
+          <g>
+            <path d="M10 25 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="26" x2="72" y2="26" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 25 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="26" x2="152" y2="26" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+          <g>
+            <path d="M10 41 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="42" x2="72" y2="42" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 41 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="42" x2="152" y2="42" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+          <g>
+            <path d="M10 57 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="58" x2="72" y2="58" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 57 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="58" x2="152" y2="58" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+          <g>
+            <path d="M10 73 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="74" x2="72" y2="74" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 73 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="74" x2="152" y2="74" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+          <g>
+            <path d="M10 89 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="90" x2="72" y2="90" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 89 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="90" x2="152" y2="90" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+          <g>
+            <path d="M10 105 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="106" x2="72" y2="106" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 105 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="106" x2="152" y2="106" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+          <g>
+            <path d="M10 121 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="122" x2="72" y2="122" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M90 121 l4 4 l8 -8" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="108" y1="122" x2="152" y2="122" stroke="#16140F" stroke-width="1.5"/>
+          </g>
+        </g>
+        <g transform="translate(280,200)">
+          <circle r="32" fill="#FFFFFF" stroke="#16140F" stroke-width="3"/>
+          <path d="M-14 0 L-4 11 L15 -14" stroke="#16140F" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <path d="M30 80 l8 -10 M44 80 l-8 -10 M36 90 l10 0" stroke="#16140F" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M312 60 q10 -10 18 0" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M324 56 l8 4 l-6 6" stroke="#16140F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    </button>
-  </div>
-  <div class="mobile-nav" id="mobile-nav">
-    <a href="#how">How it works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#contact" style="color: var(--accent); font-weight: 600;">Book_call</a>
-  </div>
-</header>
-
-<!-- ─────────── HERO ─────────── -->
-<section class="hero">
-  <div class="container">
-    <div class="tag">Vol. 01 · Catch-up bookkeeping</div>
-    <h1 class="hero-title">Clean up your <em>books</em>.</h1>
-    <p class="sub">Messy records, missing months, mixed accounts — we reconstruct your books so you can close the gap and move forward clean.</p>
-    <div class="hero-ctas">
-      <a href="#contact" class="btn btn-accent">Book_consultation →</a>
-      <a href="#how" class="btn btn-ghost">See how it works</a>
-    </div>
-  </div>
-
-  <div class="container" style="margin-top: 0; padding-left: 40px; padding-right: 40px;">
-    <div class="fact-strip">
-      <div class="fact"><div class="k">Typical engagement</div><div class="v">3 – 36 months reconstructed</div></div>
-      <div class="fact"><div class="k">Turnaround</div><div class="v">1 – 6 weeks after intake</div></div>
-      <div class="fact"><div class="k">Quote</div><div class="v">Custom · after consultation</div></div>
-      <div class="fact"><div class="k">Reviewer</div><div class="v">Big-4 trained, every file</div></div>
-      <div class="fact"><div class="k">Response</div><div class="v">&lt; 1 business day</div></div>
     </div>
   </div>
 </section>
 
-<!-- ─────────── HOW IT WORKS ─────────── -->
-<section class="section-pad" id="how">
-  <div class="container">
-    <div class="section-head" style="grid-template-columns: 1fr 0.6fr;">
-      <div>
-        <span class="eyebrow">§ 02 — How it works</span>
-        <h2>From mess to clean, in <em>four steps</em>.</h2>
-      </div>
-      <p class="lede">A focused, time-boxed process. You send what you have; we handle the reconstruction end-to-end and hand back a reconciled, auditable set of statements.</p>
-    </div>
-    <div class="pipeline">
-      <div class="step">
-        <div>
-          <div class="num">STEP_01</div>
-          <h3>Intake call</h3>
-        </div>
-        <p>30 minutes. We review your current state, accounts, systems, and the gap you need closed.</p>
-        <div class="meta"><span>DURATION</span><span>~ 30 min</span></div>
-      </div>
-      <div class="step">
-        <div>
-          <div class="num">STEP_02</div>
-          <h3>Scope &amp; quote</h3>
-        </div>
-        <p>Fixed quote by volume and months. No hourly surprises, no retainer required.</p>
-        <div class="meta"><span>TURNAROUND</span><span>24 – 48 hrs</span></div>
-      </div>
-      <div class="step">
-        <div>
-          <div class="num">STEP_03</div>
-          <h3>Reconstruct</h3>
-        </div>
-        <p>Reconcile, categorize, separate personal from business, and rebuild statements month-by-month.</p>
-        <div class="meta"><span>DURATION</span><span>1 – 6 wks</span></div>
-      </div>
-      <div class="step">
-        <div>
-          <div class="num">STEP_04</div>
-          <h3>Deliver</h3>
-        </div>
-        <p>Excel workbook with P&amp;L, balance sheet, ledgers, and a full reconciliation trail.</p>
-        <div class="meta"><span>FORMAT</span><span>Excel workbook</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────── SCOPE ─────────── -->
-<section class="scope section-pad">
-  <div class="container">
+<!-- ───────── WE'VE SEEN WORSE ───────── -->
+<section id="seen-worse">
+  <div class="section-pad">
     <div class="section-head">
-      <div>
-        <span class="eyebrow">§ 03 — Scope</span>
-        <h2>What cleanup covers — and <em>who it's for</em>.</h2>
-      </div>
-      <p class="lede">If your books went untouched for a year, your accountant walked, or your personal and business ran through one card — this is what we do every day.</p>
+      <div><span class="kicker">What we do</span></div>
+      <h2>Whatever shape your books are in — we've <span class="hl">seen worse.</span></h2>
+      <p>Untouched for a year? Accountant walked? Personal and business in one card?<br>Mostly-paper? Yep. Send it over.</p>
     </div>
+    <div class="grid-6">
 
-    <div class="two-col">
-      <div class="card">
-        <div class="card-head">
-          <h3>Cleanup scope</h3>
-          <span class="count">08 items</span>
+      <!-- 1. Reconstruct from source -->
+      <div class="card tile-card">
+        <div class="tile bg-chart">
+          <svg class="spark1" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <svg class="spark2" viewBox="0 0 24 24" fill="#16140F"><circle cx="12" cy="12" r="6"/></svg>
+          <svg viewBox="0 0 200 130" style="width:70%;height:70%">
+            <path d="M30 60 L30 105 Q30 110 35 110 L165 110 Q170 110 170 105 L170 55 Q170 50 165 50 L100 50 L90 42 L35 42 Q30 42 30 47 Z" fill="#E8D9B8" stroke="#16140F" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="60" y="35" width="55" height="55" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5" transform="rotate(-6 87 62)"/>
+            <line x1="55" y1="50" x2="100" y2="44" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="56" y1="58" x2="95" y2="52" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="57" y1="66" x2="98" y2="60" stroke="#16140F" stroke-width="1.5"/>
+            <rect x="100" y="38" width="50" height="50" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5" transform="rotate(8 125 63)"/>
+            <path d="M30 60 L30 105 Q30 110 35 110 L165 110 Q170 110 170 105 L170 60 Z" fill="#F1E9D2" stroke="#16140F" stroke-width="3"/>
+          </svg>
         </div>
-        <div class="row"><span class="check">✓</span><span class="txt">Bank account reconciliation</span><span class="rnum">01</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Credit card categorization</span><span class="rnum">02</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Payroll and expense normalization</span><span class="rnum">03</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Financial statement reconstruction</span><span class="rnum">04</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Mixed personal and business transactions</span><span class="rnum">05</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Accounts where prior accountant refused to work</span><span class="rnum">06</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Missing data identification</span><span class="rnum">07</span></div>
-        <div class="row"><span class="check">✓</span><span class="txt">Multi-year backlog</span><span class="rnum">08</span></div>
+        <h3>Reconstruct from source.</h3>
+        <p>Bank statements, card stubs, payroll runs, receipts — we rebuild the ledger transaction-by-transaction.</p>
       </div>
 
-      <div class="card">
-        <div class="card-head">
-          <h3>Who this is for</h3>
-          <span class="count">03 profiles</span>
+      <!-- 2. Reconcile, line by line -->
+      <div class="card tile-card">
+        <div class="tile bg-cream">
+          <svg class="spark1" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <svg class="spark2" viewBox="0 0 24 24" fill="#16140F"><circle cx="12" cy="12" r="6"/></svg>
+          <svg viewBox="0 0 200 130" style="width:70%;height:85%">
+            <path d="M70 15 L130 15 L130 110 L122 105 L114 110 L106 105 L98 110 L90 105 L82 110 L74 105 L70 110 Z" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5" stroke-linejoin="round"/>
+            <text x="100" y="32" text-anchor="middle" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700" fill="#16140F">RECEIPT</text>
+            <g><path d="M78 42 l3 3 l6 -6" stroke="#16140F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="92" y1="44" x2="118" y2="44" stroke="#16140F" stroke-width="1.2"/></g>
+            <g><path d="M78 52 l3 3 l6 -6" stroke="#16140F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="92" y1="54" x2="118" y2="54" stroke="#16140F" stroke-width="1.2"/></g>
+            <g><path d="M78 62 l3 3 l6 -6" stroke="#16140F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="92" y1="64" x2="118" y2="64" stroke="#16140F" stroke-width="1.2"/></g>
+            <g><path d="M78 72 l3 3 l6 -6" stroke="#16140F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="92" y1="74" x2="118" y2="74" stroke="#16140F" stroke-width="1.2"/></g>
+            <g><path d="M78 82 l3 3 l6 -6" stroke="#16140F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="92" y1="84" x2="118" y2="84" stroke="#16140F" stroke-width="1.2"/></g>
+            <circle cx="135" cy="80" r="22" fill="rgba(255,255,255,0.3)" stroke="#16140F" stroke-width="3"/>
+            <line x1="151" y1="96" x2="165" y2="110" stroke="#16140F" stroke-width="4" stroke-linecap="round"/>
+          </svg>
         </div>
-        <div class="row" style="grid-template-columns: 16px 1fr auto;"><span class="bluedot"></span><span class="txt">Businesses behind on bookkeeping</span><span class="rnum">A</span></div>
-        <div class="row" style="grid-template-columns: 16px 1fr auto;"><span class="bluedot"></span><span class="txt">Business owners needing clean records for loans, sales, or reporting</span><span class="rnum">B</span></div>
-        <div class="row" style="grid-template-columns: 16px 1fr auto;"><span class="bluedot"></span><span class="txt">Accounting and bookkeeping firms with backlog clients</span><span class="rnum">C</span></div>
-        <div class="row" style="grid-template-columns: 1fr; background: var(--panel-2);">
-          <span class="txt" style="color: var(--muted); font-size: 12.5px;">Need ongoing monthly bookkeeping? We have a partner network and can make introductions based on your requirements.</span>
+        <h3>Reconcile, line by line.</h3>
+        <p>Every transaction tied to source. Open items flagged for you, not silently absorbed.</p>
+      </div>
+
+      <!-- 3. Fill the missing months -->
+      <div class="card tile-card">
+        <div class="tile bg-sand">
+          <svg class="spark1" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <svg class="spark2" viewBox="0 0 24 24" fill="#16140F"><circle cx="12" cy="12" r="6"/></svg>
+          <svg viewBox="0 0 200 130" style="width:70%;height:75%">
+            <rect x="40" y="20" width="120" height="95" rx="3" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5"/>
+            <rect x="40" y="20" width="120" height="20" fill="#16140F" stroke="#16140F" stroke-width="2.5"/>
+            <text x="100" y="34" text-anchor="middle" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700" fill="#D4FF3A">2024 — 2026</text>
+            <!-- row 0 -->
+            <g><rect x="50" y="50" width="22" height="18" fill="#D4FF3A" stroke="#16140F" stroke-width="1.5"/><path d="M55 59 l3 3 l8 -7" stroke="#16140F" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g><rect x="77" y="50" width="22" height="18" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/><line x1="84" y1="55" x2="92" y2="63" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/><line x1="92" y1="55" x2="84" y2="63" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/></g>
+            <g><rect x="104" y="50" width="22" height="18" fill="#D4FF3A" stroke="#16140F" stroke-width="1.5"/><path d="M109 59 l3 3 l8 -7" stroke="#16140F" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g><rect x="131" y="50" width="22" height="18" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/><line x1="138" y1="55" x2="146" y2="63" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/><line x1="146" y1="55" x2="138" y2="63" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/></g>
+            <!-- row 1 -->
+            <g><rect x="50" y="72" width="22" height="18" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/><line x1="57" y1="77" x2="65" y2="85" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/><line x1="65" y1="77" x2="57" y2="85" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/></g>
+            <g><rect x="77" y="72" width="22" height="18" fill="#D4FF3A" stroke="#16140F" stroke-width="1.5"/><path d="M82 81 l3 3 l8 -7" stroke="#16140F" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g><rect x="104" y="72" width="22" height="18" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/><line x1="111" y1="77" x2="119" y2="85" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/><line x1="119" y1="77" x2="111" y2="85" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/></g>
+            <g><rect x="131" y="72" width="22" height="18" fill="#D4FF3A" stroke="#16140F" stroke-width="1.5"/><path d="M136 81 l3 3 l8 -7" stroke="#16140F" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <!-- row 2 -->
+            <g><rect x="50" y="94" width="22" height="18" fill="#D4FF3A" stroke="#16140F" stroke-width="1.5"/><path d="M55 103 l3 3 l8 -7" stroke="#16140F" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g><rect x="77" y="94" width="22" height="18" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/><line x1="84" y1="99" x2="92" y2="107" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/><line x1="92" y1="99" x2="84" y2="107" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/></g>
+            <g><rect x="104" y="94" width="22" height="18" fill="#D4FF3A" stroke="#16140F" stroke-width="1.5"/><path d="M109 103 l3 3 l8 -7" stroke="#16140F" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g><rect x="131" y="94" width="22" height="18" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/><line x1="138" y1="99" x2="146" y2="107" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/><line x1="146" y1="99" x2="138" y2="107" stroke="#C44E47" stroke-width="2" stroke-linecap="round"/></g>
+          </svg>
+        </div>
+        <h3>Fill the missing months.</h3>
+        <p>Multi-year backlogs, gaps where the prior accountant walked off — we reconnect the periods.</p>
+      </div>
+
+      <!-- 4. Split personal & business -->
+      <div class="card tile-card">
+        <div class="tile bg-cream">
+          <svg class="spark1" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <svg class="spark2" viewBox="0 0 24 24" fill="#16140F"><circle cx="12" cy="12" r="6"/></svg>
+          <svg viewBox="0 0 200 130" style="width:70%;height:78%">
+            <rect x="35" y="20" width="55" height="70" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5" transform="rotate(-8 62 55)"/>
+            <line x1="42" y1="32" x2="80" y2="27" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="43" y1="40" x2="76" y2="35" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="44" y1="48" x2="78" y2="43" stroke="#16140F" stroke-width="1.5"/>
+            <rect x="95" y="35" width="70" height="80" rx="6" fill="#16140F" stroke="#16140F" stroke-width="2.5"/>
+            <rect x="102" y="42" width="56" height="16" fill="#D4FF3A" stroke="#16140F" stroke-width="1.8"/>
+            <text x="155" y="54" text-anchor="end" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700" fill="#16140F">75,510</text>
+            <circle cx="108" cy="70" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="123" cy="70" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="138" cy="70" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="153" cy="70" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="108" cy="84" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="123" cy="84" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="138" cy="84" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="153" cy="84" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="108" cy="98" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="123" cy="98" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="138" cy="98" r="4" fill="#FFFFFF" stroke="#16140F" stroke-width="1.5"/>
+            <circle cx="153" cy="98" r="4" fill="#C44E47" stroke="#16140F" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>Split personal &amp; business.</h3>
+        <p>One card for everything? We untangle it, reclass owner draws, and document the split clearly.</p>
+      </div>
+
+      <!-- 5. Hand back, audit-ready -->
+      <div class="card tile-card">
+        <div class="tile bg-sand">
+          <svg class="spark1" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <svg class="spark2" viewBox="0 0 24 24" fill="#16140F"><circle cx="12" cy="12" r="6"/></svg>
+          <svg viewBox="0 0 200 130" style="width:72%;height:78%">
+            <rect x="35" y="30" width="65" height="80" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5" transform="rotate(-5 67 70)"/>
+            <line x1="44" y1="48" x2="92" y2="42" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="45" y1="58" x2="88" y2="52" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="46" y1="68" x2="90" y2="62" stroke="#16140F" stroke-width="1.5"/>
+            <line x1="47" y1="78" x2="84" y2="72" stroke="#16140F" stroke-width="1.5"/>
+            <path d="M62 88 q12 -8 24 0" stroke="#16140F" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="110" y="38" width="60" height="68" fill="#16140F" stroke="#16140F" stroke-width="2.5" transform="rotate(6 140 72)"/>
+            <text x="140" y="68" text-anchor="middle" font-size="11" font-family="JetBrains Mono,monospace" font-weight="800" fill="#D4FF3A" transform="rotate(6 140 72)">CLEAN</text>
+            <text x="140" y="84" text-anchor="middle" font-size="6" font-family="JetBrains Mono,monospace" font-weight="700" fill="#D4FF3A" transform="rotate(6 140 72)">audit-ready</text>
+          </svg>
+        </div>
+        <h3>Hand back, audit-ready.</h3>
+        <p>Excel workbook with P&amp;L, balance sheet, ledgers, and a full reconciliation trail your CPA can sign on.</p>
+      </div>
+
+      <!-- 6. Talk to real humans -->
+      <div class="card tile-card">
+        <div class="tile bg-chart">
+          <svg class="spark1" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <svg class="spark2" viewBox="0 0 24 24" fill="#16140F"><circle cx="12" cy="12" r="6"/></svg>
+          <svg viewBox="0 0 200 130" style="width:78%;height:80%">
+            <path d="M25 25 L130 25 Q138 25 138 33 L138 60 Q138 68 130 68 L60 68 L45 80 L48 68 L33 68 Q25 68 25 60 Z" fill="#FFFFFF" stroke="#16140F" stroke-width="2.5" stroke-linejoin="round"/>
+            <text x="82" y="42" text-anchor="middle" font-size="8" font-family="Inter Tight,sans-serif" font-weight="700" fill="#16140F">Got 18 mo. of statements,</text>
+            <text x="82" y="54" text-anchor="middle" font-size="8" font-family="Inter Tight,sans-serif" font-weight="700" fill="#16140F">two cards, payroll's a mess.</text>
+            <text x="82" y="64" text-anchor="middle" font-size="8" font-family="Inter Tight,sans-serif" font-weight="700" fill="#16140F">Help?</text>
+            <path d="M70 78 L175 78 Q183 78 183 86 L183 113 Q183 121 175 121 L100 121 L88 132 L91 121 L78 121 Q70 121 70 113 Z" fill="#16140F" stroke="#16140F" stroke-width="2.5" stroke-linejoin="round"/>
+            <text x="126" y="95" text-anchor="middle" font-size="8" font-family="Inter Tight,sans-serif" font-weight="700" fill="#D4FF3A">On it. 30-min intake call,</text>
+            <text x="126" y="107" text-anchor="middle" font-size="8" font-family="Inter Tight,sans-serif" font-weight="700" fill="#D4FF3A">fixed quote in 24–48 hrs,</text>
+            <text x="126" y="117" text-anchor="middle" font-size="8" font-family="Inter Tight,sans-serif" font-weight="700" fill="#D4FF3A">books clean in 4–6 wks. ✓</text>
+          </svg>
+        </div>
+        <h3>Talk to real humans.</h3>
+        <p>Email or text. Reply within one business day. No portals, no ticket numbers.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── INLINE CTA STRIP ───────── -->
+<div class="cta-strip-wrap">
+  <div class="cta-strip">
+    <div>
+      <div class="ttl">Sound like your situation?</div>
+      <div class="sub">30-min intake call. Fixed quote in 24–48 hours. No obligation.</div>
+    </div>
+    <a href="https://cal.com/retro-books/30min" class="btn btn-chart" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Book a free call →</a>
+  </div>
+</div>
+
+<!-- ───────── SERVICES ───────── -->
+<section id="services" class="services-section">
+  <div class="section-pad">
+    <div class="section-head center">
+      <div><span class="kicker light">Our expertise</span></div>
+      <h2 class="center smaller">Specialized bookkeeping <span class="hl">services.</span></h2>
+      <p>We don't do monthly recurring. We do the hard, retroactive work other firms quietly turn down.</p>
+    </div>
+    <div class="services-grid">
+      <div class="card service-card">
+        <div class="icon-circle">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Historical Bookkeeping</h3>
+        <p>Multi-year catch-up — reconstructed from bank statements, payroll, and source documents. No matter how far behind you are.</p>
+        <div class="divider"></div>
+        <div class="bullets">
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Bank &amp; card reconciliation</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Personal vs. business separation</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Monthly P&amp;L and balance sheet</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Audit-ready reconciliation trail</div>
+        </div>
+      </div>
+
+      <div class="card service-card">
+        <div class="icon-circle">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Tax-Ready Handoff</h3>
+        <p>Books your CPA can file from on day one. We hand over a clean workbook, year-end schedules, and answer their follow-ups directly.</p>
+        <div class="divider"></div>
+        <div class="bullets">
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Year-end schedules (1099s, depreciation)</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>CPA-ready Excel deliverable</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Direct CPA Q&amp;A — no middleman</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Back-tax filing support</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─────────── PRICING ─────────── -->
-<section class="section-pad" id="pricing">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">§ 04 — Pricing</span>
-        <h2>Custom quotes, after <em>we understand the job</em>.</h2>
-      </div>
-      <p class="lede">Every cleanup is different. We price by the months and transaction volume we rebuild — after a 30-minute call, so neither of us is guessing.</p>
+<!-- ───────── PROCESS ───────── -->
+<section id="process">
+  <div class="section-pad">
+    <div class="section-head center">
+      <div><span class="kicker">How it works</span></div>
+      <h2 class="center smaller">Four steps. <span class="hl">That's it.</span></h2>
+      <p>Time-boxed engagement. You send what you have; we handle the reconstruction end-to-end.</p>
     </div>
 
-    <div class="pricing-grid">
-      <div class="price-display">
-        <p class="lede">
-          No fixed monthly price — we quote <em>per engagement</em>, after a call. That keeps small jobs honest and lets us take on the complex ones other firms won't touch.
-        </p>
-        <div class="price-tags">
-          <span class="pill">Per-engagement</span>
-          <span class="pill">No retainer</span>
-          <span class="pill">Fixed quote after scoping</span>
+    <div class="process-wrap">
+      <div class="process-line" aria-hidden="true"></div>
+
+      <!-- Step 01 — Book a free call -->
+      <div class="step-row">
+        <div class="icon-circle" style="width:72px;height:72px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
-        <a href="#contact" class="btn btn-accent">Book_consultation →</a>
+        <div class="step-card">
+          <div class="step-grid">
+            <div class="step-text">
+              <div class="step-num">01</div>
+              <h4>Book a free call</h4>
+              <p>A 30-minute consult to understand your business, the state of your books, and what you need to come out of this with — tax filing, loan, audit, or just clean monthly reporting.</p>
+            </div>
+            <div class="step-art">
+              <div class="artifact">
+                <div class="art-head">
+                  <div class="art-eyebrow">Tue · Apr 28</div>
+                  <div class="cal-nav"><span>‹</span><span>›</span></div>
+                </div>
+                <div class="cal-days">
+                  <div>M<br><span>27</span></div>
+                  <div class="active">T<br><span>28</span></div>
+                  <div>W<br><span>29</span></div>
+                  <div>T<br><span>30</span></div>
+                  <div>F<br><span>31</span></div>
+                </div>
+                <div class="cal-slots">
+                  <div class="cal-slot"><span>9:00 AM</span></div>
+                  <div class="cal-slot"><span>9:30 AM</span></div>
+                  <div class="cal-slot picked"><span>10:00 AM</span><span class="booked">BOOKED ✓</span></div>
+                  <div class="cal-slot"><span>10:30 AM</span></div>
+                  <div class="cal-slot"><span>11:00 AM</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <div class="card-head">
-          <h3>What every engagement includes</h3>
-          <span class="count">Standard</span>
+      <!-- Step 02 — Collect documents -->
+      <div class="step-row">
+        <div class="icon-circle" style="width:72px;height:72px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
         </div>
-        <div class="row" style="grid-template-columns: 130px 1fr auto;">
-          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;">Format</span>
-          <span class="txt">Excel workbook with ledgers and schedules — whatever your accountant requires</span>
-          <span class="check">✓</span>
-        </div>
-        <div class="row" style="grid-template-columns: 130px 1fr auto;">
-          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;">Auditable</span>
-          <span class="txt">Traceable reconciliation trail, month-by-month</span>
-          <span class="check">✓</span>
-        </div>
-        <div class="row" style="grid-template-columns: 130px 1fr auto;">
-          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;">Tax-ready</span>
-          <span class="txt">Clean statements, handoff to your CPA</span>
-          <span class="check">✓</span>
-        </div>
-        <div class="row" style="grid-template-columns: 130px 1fr auto;">
-          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;">Team</span>
-          <span class="txt">Big-4 trained reviewer on every engagement</span>
-          <span class="check">✓</span>
-        </div>
-        <div class="row" style="grid-template-columns: 130px 1fr auto;">
-          <span class="mono" style="color:var(--muted); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;">White-label</span>
-          <span class="txt">Optional — deliver under your firm's brand</span>
-          <span class="check">✓</span>
+        <div class="step-card">
+          <div class="step-grid">
+            <div class="step-text">
+              <div class="step-num">02</div>
+              <h4>Collect documents</h4>
+              <p>We send a tight checklist — bank statements, prior returns, access to your accounting system. We do the chasing of vendors and payroll providers; you stay focused on running things.</p>
+            </div>
+            <div class="step-art">
+              <div class="artifact">
+                <div class="art-head">
+                  <div class="art-eyebrow">Intake checklist</div>
+                  <div class="art-eyebrow" style="color:var(--ink);font-weight:700">4 / 6</div>
+                </div>
+                <div class="check-list">
+                  <div class="check-row done"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Bank statements · 24 mo.</span></div>
+                  <div class="check-row done"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Credit card stmts · 24 mo.</span></div>
+                  <div class="check-row done"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Payroll exports</span></div>
+                  <div class="check-row done"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Prior tax return</span></div>
+                  <div class="check-row"><span class="box"></span><span>QuickBooks login</span></div>
+                  <div class="check-row"><span class="box"></span><span>Stripe / payment exports</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Step 03 — Ex-Big 4 gets to work -->
+      <div class="step-row">
+        <div class="icon-circle" style="width:72px;height:72px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="step-card">
+          <div class="step-grid">
+            <div class="step-text">
+              <div class="step-num">03</div>
+              <h4>Ex-Big 4 gets to work</h4>
+              <p>A senior reviewer rebuilds your ledger transaction-by-transaction and reconciles to source. When something needs your eyes, we email or text — fast, human, never silently coded to "miscellaneous."</p>
+            </div>
+            <div class="step-art">
+              <div class="artifact chat">
+                <div class="art-head">
+                  <div class="art-eyebrow">Re: 2024 catch-up</div>
+                  <div class="art-eyebrow">3 msgs</div>
+                </div>
+                <div class="msg">
+                  <div class="msg-head"><b>Jamie · reviewer</b><span>9:14a</span></div>
+                  <div class="msg-body">Quick Q on the 03/07 Stripe payout ($812) — personal or business? Memo's blank.</div>
+                </div>
+                <div class="msg you">
+                  <div class="msg-head"><b>You</b><span>9:31a</span></div>
+                  <div class="msg-body">Personal — split it out, my mistake.</div>
+                </div>
+                <div class="msg">
+                  <div class="msg-head"><b>Jamie</b><span>9:33a</span></div>
+                  <div class="msg-body">Got it — coding as owner draw ✓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 04 — Receive financials -->
+      <div class="step-row">
+        <div class="icon-circle" style="width:72px;height:72px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="20" x2="6" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="14"/></svg>
+        </div>
+        <div class="step-card">
+          <div class="step-grid">
+            <div class="step-text">
+              <div class="step-num">04</div>
+              <h4>Receive financials</h4>
+              <p>Excel workbook with monthly P&amp;L, balance sheet, general ledger, and full reconciliation trail — plus a kickoff call with your CPA so they can file from it without re-doing the work.</p>
+            </div>
+            <div class="step-art">
+              <div class="artifact wb">
+                <div class="wb-head">
+                  <div class="wb-eyebrow">Books · 2024.xlsx</div>
+                  <div class="wb-title">Profit &amp; Loss · FY 2024</div>
+                </div>
+                <div class="wb-body">
+                  <div class="wb-row"><span>Revenue</span><span>284,120</span></div>
+                  <div class="wb-row"><span>COGS</span><span>(112,400)</span></div>
+                  <div class="wb-row"><span>Gross</span><span>171,720</span></div>
+                  <div class="wb-row"><span>Opex</span><span>(96,210)</span></div>
+                  <div class="wb-row net"><span>Net</span><span>75,510</span></div>
+                </div>
+                <div class="wb-tabs">
+                  <div class="wb-tab active">P&amp;L</div>
+                  <div class="wb-tab">Balance</div>
+                  <div class="wb-tab">GL</div>
+                  <div class="wb-tab">Recon</div>
+                  <div class="wb-tab">Notes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ─────────── CONTACT ─────────── -->
-<section class="contact section-pad" id="contact">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">§ 05 — New engagement</span>
-        <h2>Tell us what you're <em>working with</em>.</h2>
-      </div>
-      <p class="lede">We'll respond within one business day with next steps and a scoping window.</p>
-    </div>
-
-    <div class="contact-grid">
-      <form class="form" action="https://formspree.io/f/mbdqowev" method="POST">
-        <div class="form-grid">
-          <div class="field">
-            <label>Company</label>
-            <input type="text" name="company" placeholder="Acme Holdings LLC" />
-          </div>
-          <div class="field">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Jane Doe" />
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" name="email" placeholder="jane@acme.co" />
-          </div>
-          <div class="field">
-            <label>Phone</label>
-            <input type="tel" name="phone" placeholder="(555) 010-0142" />
-          </div>
-          <div class="field full">
-            <label>Months of books to reconstruct</label>
-            <select name="months_required">
-              <option value="" disabled selected>Select range</option>
-              <option>1 – 3 months</option>
-              <option>3 – 12 months</option>
-              <option>1 – 2 years</option>
-              <option>2+ years</option>
-              <option>Not sure</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label>Notes</label>
-            <textarea name="notes" placeholder="Mixed personal and business on one card through 2024. Last reconciled March 2024. Need clean books for an SBA loan application in June."></textarea>
-          </div>
-        </div>
-        <div class="form-foot">
-          <span class="note">Reply within 1 business day</span>
-          <button type="submit" class="btn btn-accent">Send_request →</button>
-        </div>
-      </form>
-
-      <aside class="next-card">
-        <div class="card-head">
-          <h3>What happens next</h3>
-          <span class="count">04 steps</span>
-        </div>
-        <div class="next-row">
-          <span class="n">01</span>
-          <span class="body"><strong>We reply.</strong> Within one business day, with a 30-minute slot.</span>
-        </div>
-        <div class="next-row">
-          <span class="n">02</span>
-          <span class="body"><strong>Intake call.</strong> We map what you have, what's missing, and what clean looks like.</span>
-        </div>
-        <div class="next-row">
-          <span class="n">03</span>
-          <span class="body"><strong>Fixed quote.</strong> 24 – 48 hours later. No retainer, no hourly.</span>
-        </div>
-        <div class="next-row">
-          <span class="n">04</span>
-          <span class="body"><strong>Reconstruction begins.</strong> Weekly status, clean delivery at the end.</span>
-        </div>
-      </aside>
-    </div>
+<!-- ───────── FINAL CTA ───────── -->
+<section class="final-cta">
+  <div>
+    <h3>Ready when you are.</h3>
+    <p>Tell us what you've got — bank statements, a shoebox of receipts, the QuickBooks login you forgot. We reply within one business day with a fixed quote.</p>
   </div>
+  <a href="https://cal.com/retro-books/30min" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Book a free call →</a>
 </section>
 
+<!-- ───────── FOOTER ───────── -->
 <footer>
-  <div class="container footer-inner">
-    <div class="logo-box">RetroBooks<span class="dot">.</span></div>
-    <div class="mono">© MMXXVI · RetroBooks · All rights reserved</div>
-  </div>
+  <span>retrobooks · est. 2026</span>
+  <span>© MMXXVI · all rights reserved</span>
 </footer>
 
 <script>
-  const toggle = document.getElementById('nav-toggle');
-  const mobileNav = document.getElementById('mobile-nav');
-  toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+  (function(){
+    var btn=document.getElementById('nav-toggle');
+    var menu=document.getElementById('mobile-nav');
+    if(!btn||!menu) return;
+    btn.addEventListener('click',function(){
+      var open=menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    menu.addEventListener('click',function(e){
+      if(e.target.tagName==='A'){menu.classList.remove('open');btn.setAttribute('aria-expanded','false');}
+    });
+  })();
+</script>
+
+<!-- Cal.com booking embed -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "30min", {origin:"https://app.cal.com"});
+  Cal.ns["30min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#16140F"},"dark":{"cal-brand":"#D4FF3A"}},"hideEventTypeDetails":false,"layout":"month_view"});
 </script>
 
 </body>

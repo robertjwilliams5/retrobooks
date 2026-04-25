@@ -44,7 +44,7 @@
         <a href="how-it-works.html" class="hover:text-navy transition-colors">How It Works</a>
         <a href="pricing.html" class="text-navy">Pricing</a>
         <a href="tax-resolution-firms.html" class="hover:text-navy transition-colors">For Tax Resolution Firms</a>
-        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors">Get in Touch</a>
+        <a href="contact.html" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors">Get in Touch</a>
       </nav>
     </div>
     <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
@@ -53,7 +53,7 @@
         <a href="how-it-works.html" class="hover:text-navy py-2 transition-colors">How It Works</a>
         <a href="pricing.html" class="text-navy py-2">Pricing</a>
         <a href="tax-resolution-firms.html" class="hover:text-navy py-2 transition-colors">For Tax Resolution Firms</a>
-        <a href="contact.html" class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors text-center">Get in Touch</a>
+        <a href="contact.html" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-accent-dark transition-colors text-center">Get in Touch</a>
       </nav>
     </div>
   </header>
@@ -84,7 +84,7 @@
           <p class="mt-2 text-gray-600 text-lg">per month of books reconstructed</p>
           <p class="mt-1 text-gray-500 text-sm">Starting price &middot; Standard engagements up to 24 months</p>
           <div class="mt-8">
-            <a href="contact.html" class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
+            <a href="contact.html" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
               Get in Touch for a Quote
             </a>
           </div>
@@ -98,7 +98,7 @@
             For engagements exceeding 24 months of historical bookkeeping reconstruction, we provide a custom quote based on the specific scope and complexity.
           </p>
           <div class="mt-6">
-            <a href="contact.html" class="inline-block border border-gray-600 text-white font-semibold px-8 py-3.5 rounded-lg hover:border-gray-400 transition-colors text-base">
+            <a href="contact.html" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="inline-block border border-gray-600 text-white font-semibold px-8 py-3.5 rounded-lg hover:border-gray-400 transition-colors text-base">
               Request Custom Quote
             </a>
           </div>
@@ -211,7 +211,7 @@
         Share the case details and we'll provide a scoped quote based on the months of backlog and complexity involved.
       </p>
       <div class="mt-8">
-        <a href="contact.html" class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
+        <a href="contact.html" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="inline-block bg-accent text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-dark transition-colors text-base">
           Get in Touch
         </a>
       </div>
@@ -240,7 +240,7 @@
         <div>
           <h4 class="text-white font-semibold text-sm mb-4">Contact</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="contact.html" class="hover:text-white transition-colors">Get in Touch</a></li>
+            <li><a href="contact.html" data-cal-link="retro-books/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="hover:text-white transition-colors">Get in Touch</a></li>
           </ul>
         </div>
       </div>
@@ -256,5 +256,11 @@
     });
   </script>
 
+<!-- Cal.com booking embed -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "30min", {origin:"https://app.cal.com"});
+  Cal.ns["30min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#16140F"},"dark":{"cal-brand":"#D4FF3A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+</script>
 </body>
 </html>
