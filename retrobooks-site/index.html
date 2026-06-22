@@ -97,14 +97,15 @@
   .cta-strip .ttl{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
   .cta-strip .sub{font-size:14px;color:rgba(244,244,240,0.7)}
 
-  /* ─── services 2-card ─── */
+  /* ─── services (single block) ─── */
   .services-section{background:var(--soft)}
-  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:1280px;margin:0 auto}
-  .service-card{padding:36px;display:flex;flex-direction:column;gap:18px}
+  .services-grid{display:grid;grid-template-columns:1fr;gap:22px;max-width:860px;margin:0 auto}
+  .service-card{padding:40px 44px;display:flex;flex-direction:column;gap:18px}
   .service-card h3{font-size:28px;font-weight:700;letter-spacing:-0.02em;margin:0}
-  .service-card p{font-size:15px;line-height:1.55;color:var(--muted);margin:0}
+  .service-card p{font-size:15.5px;line-height:1.6;color:var(--muted);margin:0}
   .service-card .divider{height:1px;background:var(--rule);margin:6px 0}
   .bullets{display:grid;gap:10px}
+  .bullets.cols2{grid-template-columns:1fr 1fr;gap:12px 32px}
   .bullet{display:flex;align-items:center;gap:12px;font-size:14.5px}
   .bullet .dot{width:22px;height:22px;border-radius:50%;background:var(--chart);border:2px solid var(--ink);display:grid;place-items:center;flex-shrink:0}
 
@@ -193,6 +194,8 @@
     .section-pad{padding:60px 24px}
     .grid-6{grid-template-columns:repeat(2,1fr)}
     .services-grid{grid-template-columns:1fr}
+    .service-card{padding:32px 28px}
+    .bullets.cols2{grid-template-columns:1fr;gap:10px}
     .step-grid{grid-template-columns:1fr}
     .step-text{border-right:none;border-bottom:2px solid var(--ink)}
     .process-line{display:none}
@@ -505,27 +508,14 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         </div>
         <h3>Catch-up bookkeeping</h3>
-        <p>Years of catch-up, rebuilt from your bank statements, payroll, and whatever else you've got. No matter how far behind you are.</p>
+        <p>Behind on years of books? We reconstruct them from whatever you've got and hand back clean, accurate financials, ready for taxes, a loan, a sale, or an IRS case. When tax resolution's involved, we work directly with your attorney or connect you with one from our network.</p>
         <div class="divider"></div>
-        <div class="bullets">
+        <div class="bullets cols2">
           <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Bank &amp; card reconciliation</div>
-          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Transaction categorization and cleanup</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Clean, tax-ready financial statements</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Transaction categorization &amp; cleanup</div>
+          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Coordinate with your tax resolution attorney</div>
           <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Personal vs. business separation</div>
-          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Financial statement preparation</div>
-          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Get your books current and tax-ready</div>
-        </div>
-      </div>
-
-      <div class="card service-card">
-        <div class="icon-circle">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3>Tax debt resolution support</h3>
-        <p>Books and financial statements you can hand straight to a tax resolution attorney for an IRS case. We answer their follow-ups directly.</p>
-        <div class="divider"></div>
-        <div class="bullets">
-          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Tax resolution-ready financial statements</div>
-          <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>We'll work with your tax resolution specialist directly or refer you to an expert in our network</div>
           <div class="bullet"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Back-tax filing support</div>
         </div>
       </div>
